@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THRONE PROPERTY 會員 App｜可點擊原型 PROTOTYPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0a1730; --navy-2:#0c1d3d; --navy-3:#12274d; --navy-deep:#060f22;
+  --gold:#c8a35a; --gold-l:#e7cf9b; --gold-d:#a07d3a;
+  --cream:#f5efe2; --paper:#faf6ee; --ink:#1a2438; --muted:#8b93a5;
+  --line:rgba(200,163,90,.22); --line-2:#ece3d2;
+  --pos:#3f8c5e; --neg:#c0623f; --warn:#c9952f;
+  --serif-en:"Cormorant Garamond",Georgia,serif;
+  --serif:"Noto Serif TC",serif;
+  --sans:"Noto Sans TC",-apple-system,"PingFang TC",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:
+  radial-gradient(1200px 600px at 50% -10%,#16294d 0%,var(--navy) 45%,var(--navy-deep) 100%);
+  min-height:100vh;color:var(--ink);-webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;align-items:center;padding:34px 16px 60px}
+
+/* ---- intro / page header ---- */
+.page-head{text-align:center;color:#e8ecf5;max-width:760px;margin-bottom:26px}
+.page-head .eyebrow{font-family:var(--serif-en);letter-spacing:.42em;text-transform:uppercase;
+  color:var(--gold);font-size:13px;font-weight:600;margin-bottom:10px}
+.page-head h1{font-family:var(--serif);font-weight:600;font-size:24px;letter-spacing:.04em;margin-bottom:10px}
+.page-head p{color:#aeb8cd;font-size:13.5px;line-height:1.7;font-weight:300}
+.proto-badge{display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.18em;color:var(--gold-l);
+  border:1px solid var(--line);border-radius:30px;padding:5px 16px}
+
+/* ---- phone frame ---- */
+.phone{width:390px;max-width:100%;height:820px;background:var(--paper);border-radius:46px;
+  box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 11px #0b1426,0 0 0 13px #1d2c4a;
+  position:relative;overflow:hidden;display:flex;flex-direction:column}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:150px;height:26px;
+  background:#0b1426;border-radius:0 0 18px 18px;z-index:60}
+.statusbar{height:44px;flex:0 0 44px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 26px;font-size:12.5px;font-weight:500;color:var(--ink);z-index:50}
+.statusbar .dots{letter-spacing:1px}
+
+/* ---- screen system ---- */
+.screen-wrap{flex:1;position:relative;overflow:hidden}
+.screen{position:absolute;inset:0;overflow-y:auto;display:none;flex-direction:column;
+  -webkit-overflow-scrolling:touch}
+.screen.active{display:flex;animation:fade .32s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.screen::-webkit-scrollbar{width:0}
+.body-pad{padding:18px 20px 96px}
+
+/* ---- generic ui ---- */
+.h-serif{font-family:var(--serif);font-weight:600}
+.gold{color:var(--gold-d)}
+.sec-title{font-family:var(--serif);font-size:15.5px;color:var(--ink);letter-spacing:.06em;
+  margin:22px 0 12px;display:flex;align-items:center;gap:9px}
+.sec-title::before{content:"";width:16px;height:2px;background:var(--gold)}
+.sec-title .more{margin-left:auto;font-family:var(--sans);font-size:12px;color:var(--gold-d);font-weight:400}
+.card{background:#fff;border:1px solid var(--line-2);border-radius:14px;padding:16px;
+  box-shadow:0 6px 20px rgba(20,30,60,.04)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  font-family:var(--sans);font-size:15px;letter-spacing:.06em;padding:15px;border-radius:12px;
+  border:none;cursor:pointer;font-weight:500;transition:.2s}
+.btn.solid{background:linear-gradient(120deg,var(--gold-d),var(--gold));color:#fff;
+  box-shadow:0 10px 24px rgba(160,125,58,.32)}
+.btn.solid:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--gold-d)}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500}
+.tag.gold{background:rgba(200,163,90,.14);color:var(--gold-d)}
+.tag.pos{background:rgba(63,140,94,.13);color:var(--pos)}
+.tag.neg{background:rgba(192,98,63,.12);color:var(--neg)}
+.tag.warn{background:rgba(201,149,47,.14);color:var(--warn)}
+.tag.p2{background:rgba(139,147,165,.14);color:var(--muted)}
+.row{display:flex;align-items:center;gap:12px}
+.spacer{flex:1}
+.muted{color:var(--muted)}
+.tabular{font-variant-numeric:tabular-nums}
+
+/* ---- header banners inside screens ---- */
+.app-top{background:linear-gradient(165deg,var(--navy-3),var(--navy) 70%);color:#fff;
+  padding:18px 20px 22px;position:relative}
+.app-top .brand-en{font-family:var(--serif-en);letter-spacing:.34em;font-size:17px;color:var(--gold-l);font-weight:600}
+.app-top .brand-cn{font-size:11px;letter-spacing:.3em;color:#b9c3d8;margin-top:2px}
+
+/* ============ LOGIN ============ */
+#login{background:linear-gradient(170deg,var(--navy-2),var(--navy-deep));color:#fff;justify-content:flex-start}
+#login .login-inner{padding:38px 30px;display:flex;flex-direction:column;height:100%}
+#login .logo-badge{width:74px;height:74px;border-radius:20px;border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;margin:18px auto 16px;
+  background:rgba(255,255,255,.03);font-family:var(--serif-en);font-size:30px;color:var(--gold);letter-spacing:-.02em}
+#login h2{text-align:center;font-family:var(--serif-en);font-size:23px;letter-spacing:.3em;color:#fff;font-weight:600}
+#login .sub{text-align:center;color:#9aa6bf;font-size:12px;letter-spacing:.22em;margin-top:6px;margin-bottom:30px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;color:#9aa6bf;margin-bottom:7px;letter-spacing:.05em}
+.field input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+  border-radius:11px;padding:14px;color:#fff;font-size:14px;font-family:var(--sans)}
+.field input::placeholder{color:#6f7c96}
+.kyc-banner{display:flex;gap:10px;align-items:flex-start;background:rgba(200,163,90,.08);
+  border:1px solid var(--line);border-radius:12px;padding:12px 13px;margin:6px 0 18px;font-size:12px;color:#cdd6e8;line-height:1.6}
+#login .alt{text-align:center;margin-top:20px;font-size:12.5px;color:#9aa6bf}
+.login-foot{margin-top:auto;text-align:center;font-size:11px;color:#5e6a85;line-height:1.7}
+
+/* ============ HOME ============ */
+.member-card{margin:14px 20px 0;background:
+  linear-gradient(120deg,var(--navy-2),var(--navy-3) 60%,#1c3563);
+  border-radius:18px;padding:18px;color:#fff;position:relative;overflow:hidden;
+  box-shadow:0 14px 30px rgba(8,17,36,.4)}
+.member-card::after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;
+  border-radius:50%;background:radial-gradient(circle,rgba(200,163,90,.28),transparent 70%)}
+.member-card .tier{font-family:var(--serif-en);letter-spacing:.3em;color:var(--gold-l);font-size:12px}
+.member-card .name{font-family:var(--serif);font-size:20px;margin-top:10px}
+.member-card .no{font-size:11.5px;color:#b9c3d8;letter-spacing:.16em;margin-top:4px}
+.member-card .stats{display:flex;gap:22px;margin-top:16px}
+.member-card .stats .v{font-family:var(--serif);font-size:20px}
+.member-card .stats .l{font-size:10.5px;color:#aab4cb;margin-top:2px}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:18px 20px 0}
+.quick .q{background:#fff;border:1px solid var(--line-2);border-radius:13px;padding:13px 6px;
+  text-align:center;cursor:pointer;transition:.15s}
+.quick .q:active{transform:scale(.96)}
+.quick .ico{font-size:21px;margin-bottom:6px}
+.quick .lab{font-size:11px;color:var(--ink)}
+.notice{display:flex;gap:11px;align-items:center;background:rgba(63,140,94,.08);
+  border:1px solid rgba(63,140,94,.2);border-radius:12px;padding:12px 14px}
+.notice .dot{width:8px;height:8px;border-radius:50%;background:var(--pos);flex:0 0 8px}
+
+/* listing cards */
+.listing{display:flex;gap:13px;background:#fff;border:1px solid var(--line-2);border-radius:14px;
+  padding:11px;margin-bottom:11px;cursor:pointer}
+.listing .thumb{width:92px;height:92px;border-radius:11px;flex:0 0 92px;
+  background-size:cover;background-position:center;position:relative}
+.listing .info{flex:1;min-width:0;display:flex;flex-direction:column}
+.listing .info h4{font-family:var(--serif);font-size:15px;font-weight:600;margin-bottom:3px}
+.listing .info .loc{font-size:11.5px;color:var(--muted);margin-bottom:6px}
+.listing .info .price{font-family:var(--serif);color:var(--gold-d);font-size:16px;margin-top:auto}
+.listing .info .price small{font-size:11px;color:var(--muted)}
+
+/* my property item */
+.prop{background:#fff;border:1px solid var(--line-2);border-radius:14px;padding:15px;margin-bottom:12px;cursor:pointer}
+.prop .pj{font-family:var(--serif);font-size:15.5px;font-weight:600}
+.prop .unit{font-size:12px;color:var(--muted);margin-top:3px;letter-spacing:.04em}
+.prop .meta{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
+.prop .rentline{display:flex;align-items:center;margin-top:13px;padding-top:12px;border-top:1px dashed var(--line-2);font-size:12.5px}
+
+/* detail */
+.detail-hero{height:170px;background-size:cover;background-position:center;position:relative}
+.detail-hero .back{position:absolute;top:14px;left:14px;width:34px;height:34px;border-radius:50%;
+  background:rgba(8,17,36,.55);color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:17px;cursor:pointer;backdrop-filter:blur(4px)}
+.detail-hero .ov{position:absolute;left:0;right:0;bottom:0;padding:30px 18px 14px;color:#fff;
+  background:linear-gradient(transparent,rgba(6,15,34,.85))}
+.detail-hero .ov h3{font-family:var(--serif);font-size:18px}
+.detail-hero .ov .u{font-size:12px;color:#cdd6e8;margin-top:3px}
+.subtabs{display:flex;gap:4px;padding:12px 16px 0;overflow-x:auto}
+.subtab{flex:0 0 auto;font-size:12.5px;padding:8px 14px;border-radius:20px;border:1px solid var(--line-2);
+  color:var(--muted);background:#fff;cursor:pointer;white-space:nowrap}
+.subtab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.kv{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line-2);font-size:13.5px}
+.kv:last-child{border-bottom:none}
+.kv .k{color:var(--muted)}
+.kv .v{font-weight:500;text-align:right}
+.doc{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line-2);
+  border-radius:12px;padding:13px;margin-bottom:10px;cursor:pointer}
+.doc .fico{width:40px;height:40px;border-radius:9px;background:rgba(192,98,63,.1);color:var(--neg);
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:0 0 40px}
+.doc .dinfo{flex:1}.doc .dinfo .dn{font-size:13.5px;font-weight:500}
+.doc .dinfo .dm{font-size:11px;color:var(--muted);margin-top:2px}
+.doc .dl{color:var(--gold-d);font-size:18px}
+.rent-hero{background:linear-gradient(120deg,rgba(63,140,94,.1),rgba(63,140,94,.03));
+  border:1px solid rgba(63,140,94,.25);border-radius:14px;padding:18px;text-align:center;margin-bottom:14px}
+.rent-hero .amt{font-family:var(--serif);font-size:28px;color:var(--pos)}
+.rent-hero .st{font-size:12px;color:var(--pos);margin-top:4px;letter-spacing:.06em}
+
+/* ============ CS CHAT ============ */
+#cs{background:#eef1f6}
+.cs-head{background:linear-gradient(165deg,var(--navy-3),var(--navy));color:#fff;padding:16px 18px;display:flex;align-items:center;gap:12px}
+.cs-head .av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold-d),var(--gold-l));
+  display:flex;align-items:center;justify-content:center;font-family:var(--serif-en);font-weight:600;color:#fff}
+.cs-head .nm{font-size:14.5px;font-weight:500}
+.cs-head .on{font-size:11px;color:#8fe0a8;margin-top:2px;display:flex;align-items:center;gap:5px}
+.cs-head .on::before{content:"";width:6px;height:6px;border-radius:50%;background:#5fd083}
+.trans-bar{display:flex;align-items:center;gap:8px;background:rgba(200,163,90,.12);
+  padding:9px 18px;font-size:11.5px;color:var(--gold-d);border-bottom:1px solid var(--line-2)}
+.trans-bar .sw{margin-left:auto;width:34px;height:19px;border-radius:20px;background:var(--gold);position:relative}
+.trans-bar .sw::after{content:"";position:absolute;top:2px;right:2px;width:15px;height:15px;border-radius:50%;background:#fff}
+.chat{flex:1;padding:16px 16px 20px;display:flex;flex-direction:column;gap:14px}
+.msg{max-width:80%;display:flex;flex-direction:column;gap:3px}
+.msg.in{align-self:flex-start}
+.msg.out{align-self:flex-end;align-items:flex-end}
+.bubble{padding:11px 14px;border-radius:16px;font-size:14px;line-height:1.5}
+.msg.in .bubble{background:#fff;border:1px solid var(--line-2);border-bottom-left-radius:5px}
+.msg.out .bubble{background:linear-gradient(120deg,var(--navy-3),var(--navy-2));color:#fff;border-bottom-right-radius:5px}
+.msg .orig{font-size:11.5px;color:var(--muted);padding:0 6px}
+.msg .orig .lbl{color:var(--gold-d)}
+.msg.out .orig{color:#8b93a5}
+.msg .time{font-size:10px;color:#aab2c4;padding:0 6px}
+.chat-input{display:flex;gap:9px;padding:11px 14px;background:#fff;border-top:1px solid var(--line-2);align-items:center}
+.chat-input .ti{flex:1;background:#f1f3f7;border-radius:20px;padding:11px 15px;color:var(--muted);font-size:13.5px}
+.chat-input .send{width:40px;height:40px;border-radius:50%;background:linear-gradient(120deg,var(--gold-d),var(--gold));
+  color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;flex:0 0 40px;cursor:pointer}
+.chan-note{font-size:11px;color:var(--muted);text-align:center;padding:6px}
+
+/* ============ PROFILE ============ */
+.prof-top{background:linear-gradient(165deg,var(--navy-3),var(--navy));color:#fff;padding:26px 20px 22px;text-align:center}
+.prof-top .av{width:66px;height:66px;border-radius:50%;background:linear-gradient(135deg,var(--gold-d),var(--gold-l));
+  margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;color:#fff}
+.prof-top .nm{font-family:var(--serif);font-size:18px}
+.prof-top .verified{display:inline-flex;gap:5px;align-items:center;font-size:11px;color:#8fe0a8;margin-top:6px}
+.plist{margin-top:14px}
+.pitem{display:flex;align-items:center;gap:13px;background:#fff;padding:15px;border-bottom:1px solid var(--line-2);cursor:pointer}
+.pitem .ico{font-size:18px;width:24px;text-align:center}
+.pitem .t{flex:1;font-size:14px}
+.pitem .ar{color:var(--muted);font-size:16px}
+.pitem:first-child{border-radius:13px 13px 0 0}
+.pitem:last-child{border-radius:0 0 13px 13px;border-bottom:none}
+
+/* ---- bottom tab bar ---- */
+.tabbar{position:absolute;bottom:0;left:0;right:0;height:74px;background:rgba(255,255,255,.94);
+  backdrop-filter:blur(14px);border-top:1px solid var(--line-2);display:flex;z-index:40;
+  padding-bottom:10px}
+.tabbar .tb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  cursor:pointer;color:var(--muted);font-size:10.5px}
+.tabbar .tb .i{font-size:20px}
+.tabbar .tb.active{color:var(--gold-d)}
+.hidden-tab{display:none!important}
+
+/* ---- caption under phone ---- */
+.legend{max-width:760px;margin-top:30px;color:#aeb8cd;font-size:12.5px;line-height:1.9;text-align:center}
+.legend b{color:var(--gold-l);font-weight:500}
+.legend .pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.legend .pill{border:1px solid var(--line);border-radius:30px;padding:5px 14px;font-size:11.5px;color:#cdd6e8}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <div class="eyebrow">Throne Property</div>
+  <h1>會員 App · 可點擊原型</h1>
+  <p>碩盛國際不動產 — 全球屋主專屬會員系統。中港主推微信小程序、海外採 App，共用同一套後端。<br>此為前端互動原型（示意資料），用來和團隊對齊 Phase 1 流程與畫面。</p>
+  <span class="proto-badge">PROTOTYPE · 示意資料，非真實營運數據</span>
+</div>
+
+<div class="phone">
+  <div class="notch"></div>
+  <div class="statusbar">
+    <span>9:41</span>
+    <span class="dots">＊ ＊＊＊　５G　▮▮▮</span>
+  </div>
+
+  <div class="screen-wrap">
+
+    <!-- ============ LOGIN ============ -->
+    <div class="screen active" id="login">
+      <div class="login-inner">
+        <div class="logo-badge">T</div>
+        <h2>THRONE</h2>
+        <div class="sub">PROPERTY · 全球資產管家</div>
+
+        <div class="field">
+          <label>會員帳號 / 手機號碼</label>
+          <input type="text" value="888 6188 ****" placeholder="請輸入帳號">
+        </div>
+        <div class="field">
+          <label>密碼</label>
+          <input type="password" value="••••••••••" placeholder="請輸入密碼">
+        </div>
+
+        <div class="kyc-banner">
+          <span style="font-size:16px">🛡️</span>
+          <span>登入後須完成 <b style="color:var(--gold-l)">實名認證（KYC）</b>。系統僅顯示<b style="color:var(--gold-l)">已綁定在您名下</b>的委託物件，不開放以姓名查詢他人資料，確保財務隱私。</span>
+        </div>
+
+        <button class="btn solid" onclick="login()">登入 / 完成實名認證</button>
+        <div class="alt">新屋主？ <span style="color:var(--gold-l)">申請會員資格 ›</span></div>
+
+        <div class="login-foot">
+          支援 中文 · English · 廣東話 · ภาษาไทย<br>
+          © THRONE PROPERTY · 原型展示
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ HOME ============ -->
+    <div class="screen" id="home">
+      <div class="app-top">
+        <div class="brand-en">THRONE PROPERTY</div>
+        <div class="brand-cn">碩盛國際不動產 · 會員中心</div>
+      </div>
+
+      <div class="member-card">
+        <div class="tier">◆ ROYAL MEMBER · 鑽石屋主</div>
+        <div class="name">陳先生 Mr. Chen</div>
+        <div class="no">會員編號　TP · 888 6188</div>
+        <div class="stats">
+          <div><div class="v">3</div><div class="l">委託物件</div></div>
+          <div><div class="v">2</div><div class="l">出租中</div></div>
+          <div><div class="v tabular">¥58,400</div><div class="l">本月已收租</div></div>
+        </div>
+      </div>
+
+      <div class="quick">
+        <div class="q" onclick="go('search')"><div class="ico">🔍</div><div class="lab">物件搜尋</div></div>
+        <div class="q" onclick="go('props')"><div class="ico">🏠</div><div class="lab">我的物件</div></div>
+        <div class="q" onclick="go('cs')"><div class="ico">💬</div><div class="lab">客服諮詢</div></div>
+        <div class="q" onclick="openDoc()"><div class="ico">📄</div><div class="lab">合約財報</div></div>
+      </div>
+
+      <div class="body-pad" style="padding-top:6px">
+        <div class="sec-title">最新動態</div>
+        <div class="notice">
+          <span class="dot"></span>
+          <div style="font-size:12.5px;line-height:1.6">
+            <b>曼谷 The Reserve · 28F-A</b> 5 月租金 ¥21,000 已到帳。
+            <div class="muted" style="margin-top:2px">2026/06/03 · 已匯入指定帳戶</div>
+          </div>
+        </div>
+
+        <div class="sec-title">為您精選 <span class="more" onclick="go('search')">查看更多 ›</span></div>
+        <div class="listing" onclick="go('search')">
+          <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=400&q=70')"></div>
+          <div class="info">
+            <h4>The Reserve Sukhumvit</h4>
+            <div class="loc">🇹🇭 泰國 曼谷 · 1 房 38㎡</div>
+            <span class="tag gold" style="align-self:flex-start">租金回報 6.2%</span>
+            <div class="price">฿ 6.8M <small>· 約 ¥1.38M</small></div>
+          </div>
+        </div>
+        <div class="listing" onclick="go('search')">
+          <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1567496898669-ee935f5f647a?auto=format&fit=crop&w=400&q=70')"></div>
+          <div class="info">
+            <h4>Sky Garden Residence</h4>
+            <div class="loc">🇯🇵 日本 大阪 · 2 房 55㎡</div>
+            <span class="tag gold" style="align-self:flex-start">代租代管</span>
+            <div class="price">¥ 2.45M <small>· 整層精裝</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SEARCH ============ -->
+    <div class="screen" id="search">
+      <div class="app-top">
+        <div class="brand-en">物件搜尋</div>
+        <div class="brand-cn">SEARCH · 全球精選物件</div>
+      </div>
+      <div class="body-pad">
+        <div class="card row" style="gap:8px;padding:12px 14px">
+          <span style="font-size:16px">🔍</span>
+          <span class="muted" style="font-size:13.5px">搜尋城市、建案或關鍵字…</span>
+        </div>
+        <div style="display:flex;gap:7px;margin-top:12px;flex-wrap:wrap">
+          <span class="tag gold">全部</span><span class="tag p2">泰國</span>
+          <span class="tag p2">日本</span><span class="tag p2">英國</span><span class="tag p2">高回報</span>
+        </div>
+        <div style="margin-top:14px"></div>
+        <div class="listing">
+          <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=400&q=70')"></div>
+          <div class="info"><h4>The Reserve Sukhumvit</h4>
+            <div class="loc">🇹🇭 曼谷 · 1 房 38㎡</div>
+            <span class="tag pos" style="align-self:flex-start">回報 6.2%</span>
+            <div class="price">฿ 6.8M</div></div>
+        </div>
+        <div class="listing">
+          <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=400&q=70')"></div>
+          <div class="info"><h4>Sky Garden Residence</h4>
+            <div class="loc">🇯🇵 大阪 · 2 房 55㎡</div>
+            <span class="tag gold" style="align-self:flex-start">代租代管</span>
+            <div class="price">¥ 2.45M</div></div>
+        </div>
+        <div class="listing">
+          <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=400&q=70')"></div>
+          <div class="info"><h4>Canary Wharf Tower</h4>
+            <div class="loc">🇬🇧 倫敦 · 1 房 42㎡</div>
+            <span class="tag pos" style="align-self:flex-start">回報 5.1%</span>
+            <div class="price">£ 720K</div></div>
+        </div>
+        <div style="text-align:center;margin-top:6px">
+          <span class="tag p2">物件搜尋完整版列為 Phase 2</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MY PROPERTIES ============ -->
+    <div class="screen" id="props">
+      <div class="app-top">
+        <div class="brand-en">我的委託物件</div>
+        <div class="brand-cn">MY PORTFOLIO · 已綁定 3 筆</div>
+      </div>
+      <div class="body-pad">
+        <div style="display:flex;gap:8px;align-items:center;background:rgba(63,140,94,.08);
+          border:1px solid rgba(63,140,94,.2);border-radius:11px;padding:11px 13px;margin-bottom:16px;font-size:12px;color:var(--pos)">
+          <span>🛡️</span><span>已實名認證 · 以下為綁定在 <b>陳先生</b> 名下之委託物件</span>
+        </div>
+
+        <div class="prop" onclick="openDetail()">
+          <div class="row"><div>
+            <div class="pj">The Reserve Sukhumvit</div>
+            <div class="unit">曼谷 · 28 樓 A 室 · Unit 28F-A</div>
+          </div><div class="spacer"></div><span class="tag pos">出租中</span></div>
+          <div class="meta">
+            <span class="tag gold">代租代管</span>
+            <span class="tag p2">租約至 2026/12</span>
+          </div>
+          <div class="rentline">
+            <span class="muted">上月租金</span>
+            <div class="spacer"></div>
+            <span class="tabular" style="font-weight:600">฿ 32,000</span>
+            <span class="tag pos" style="margin-left:8px">已到帳</span>
+          </div>
+        </div>
+
+        <div class="prop" onclick="openDetail()">
+          <div class="row"><div>
+            <div class="pj">Sky Garden Residence</div>
+            <div class="unit">大阪 · 15 樓 03 室 · Unit 1503</div>
+          </div><div class="spacer"></div><span class="tag pos">出租中</span></div>
+          <div class="meta">
+            <span class="tag gold">代租代管</span>
+            <span class="tag p2">租約至 2027/03</span>
+          </div>
+          <div class="rentline">
+            <span class="muted">上月租金</span>
+            <div class="spacer"></div>
+            <span class="tabular" style="font-weight:600">¥ 185,000</span>
+            <span class="tag warn" style="margin-left:8px">處理中</span>
+          </div>
+        </div>
+
+        <div class="prop" onclick="openDetail()">
+          <div class="row"><div>
+            <div class="pj">Canary Wharf Tower</div>
+            <div class="unit">倫敦 · 9 樓 02 室 · Unit 0902</div>
+          </div><div class="spacer"></div><span class="tag neg">待出租</span></div>
+          <div class="meta">
+            <span class="tag gold">代租代管</span>
+            <span class="tag p2">招租中</span>
+          </div>
+          <div class="rentline">
+            <span class="muted">狀態</span>
+            <div class="spacer"></div>
+            <span class="muted">空置 · 仲介帶看 3 組</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PROPERTY DETAIL ============ -->
+    <div class="screen" id="detail">
+      <div class="detail-hero" style="background-image:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=75')">
+        <div class="back" onclick="go('props')">‹</div>
+        <div class="ov">
+          <h3>The Reserve Sukhumvit</h3>
+          <div class="u">🇹🇭 曼谷 · 28 樓 A 室 · Unit 28F-A</div>
+        </div>
+      </div>
+      <div class="subtabs">
+        <div class="subtab active" onclick="dtab(this,'d-status')">房間現況</div>
+        <div class="subtab" onclick="dtab(this,'d-rent')">租金到帳</div>
+        <div class="subtab" onclick="dtab(this,'d-docs')">合約 / 財報</div>
+      </div>
+      <div class="body-pad" style="padding-top:14px">
+        <div id="d-status" class="dpane">
+          <div class="card">
+            <div class="kv"><span class="k">出租狀態</span><span class="v"><span class="tag pos">出租中</span></span></div>
+            <div class="kv"><span class="k">承租人</span><span class="v">已簽約（隱私保護）</span></div>
+            <div class="kv"><span class="k">租約期間</span><span class="v">2025/01 – 2026/12</span></div>
+            <div class="kv"><span class="k">月租金</span><span class="v tabular">฿ 32,000</span></div>
+            <div class="kv"><span class="k">管理方</span><span class="v">THRONE 代租代管</span></div>
+            <div class="kv"><span class="k">下次租約檢視</span><span class="v">2026/10/01</span></div>
+          </div>
+          <button class="btn ghost" style="margin-top:14px" onclick="go('cs')">💬 就此物件聯繫客服</button>
+        </div>
+
+        <div id="d-rent" class="dpane" style="display:none">
+          <div class="rent-hero">
+            <div class="amt tabular">฿ 32,000</div>
+            <div class="st">✓ 2026 年 5 月租金已到帳</div>
+            <div class="muted" style="font-size:11.5px;margin-top:6px">入帳日 2026/06/03 · 約 ¥21,000</div>
+          </div>
+          <div class="card">
+            <div class="kv"><span class="k">2026/05</span><span class="v"><span class="tag pos">已到帳</span> ฿32,000</span></div>
+            <div class="kv"><span class="k">2026/04</span><span class="v"><span class="tag pos">已到帳</span> ฿32,000</span></div>
+            <div class="kv"><span class="k">2026/03</span><span class="v"><span class="tag pos">已到帳</span> ฿32,000</span></div>
+            <div class="kv"><span class="k">2026/02</span><span class="v"><span class="tag pos">已到帳</span> ฿32,000</span></div>
+          </div>
+          <div class="muted" style="font-size:11px;text-align:center;margin-top:12px">金額以結構化資料呈現，不經機器翻譯，避免誤差</div>
+        </div>
+
+        <div id="d-docs" class="dpane" style="display:none">
+          <div class="doc" onclick="alert('原型：點擊將開啟 PDF 檢視器（受權限保護）')">
+            <div class="fico">PDF</div>
+            <div class="dinfo"><div class="dn">租賃合約 Tenancy Agreement</div><div class="dm">2.4 MB · 2025/01 簽署</div></div>
+            <div class="dl">⤓</div>
+          </div>
+          <div class="doc" onclick="alert('原型：點擊將開啟 PDF 檢視器（受權限保護）')">
+            <div class="fico">PDF</div>
+            <div class="dinfo"><div class="dn">委託管理合約 Management Agreement</div><div class="dm">1.8 MB · 有效中</div></div>
+            <div class="dl">⤓</div>
+          </div>
+          <div class="doc" onclick="alert('原型：點擊將開啟 PDF 檢視器（受權限保護）')">
+            <div class="fico">PDF</div>
+            <div class="dinfo"><div class="dn">2025 年度財務報表</div><div class="dm">收支明細 · 含稅費與管理費</div></div>
+            <div class="dl">⤓</div>
+          </div>
+          <div class="muted" style="font-size:11px;text-align:center;margin-top:10px">文件僅限本人檢視 · 下載將記錄存取軌跡</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CUSTOMER SERVICE ============ -->
+    <div class="screen" id="cs">
+      <div class="cs-head">
+        <div class="av">TP</div>
+        <div>
+          <div class="nm">THRONE 專屬客服 · Nan</div>
+          <div class="on">線上 · 通常 1 分鐘內回覆</div>
+        </div>
+      </div>
+      <div class="trans-bar">
+        🌐 即時翻譯已開啟　您說中文 · 客服收到泰文
+        <div class="sw"></div>
+      </div>
+      <div class="chat">
+        <div class="msg in">
+          <div class="bubble">สวัสดีค่ะ คุณเฉิน 😊 มีอะไรให้ช่วยไหมคะ</div>
+          <div class="orig"><span class="lbl">譯：</span>陳先生您好 😊 有什麼可以為您服務的嗎？</div>
+          <div class="time">09:32 · 客服 Nan（泰文原文）</div>
+        </div>
+        <div class="msg out">
+          <div class="bubble">我想確認曼谷 28F-A 五月的租金到帳了嗎？</div>
+          <div class="orig"><span class="lbl">客服端顯示：</span>คุณต้องการยืนยันว่าค่าเช่าเดือนพฤษภาคม…</div>
+          <div class="time">09:33 · 您（中文）</div>
+        </div>
+        <div class="msg in">
+          <div class="bubble">เรียบร้อยแล้วค่ะ ฿32,000 เข้าบัญชีวันที่ 3 มิ.ย.</div>
+          <div class="orig"><span class="lbl">譯：</span>已經到帳囉，฿32,000 於 6 月 3 日入帳 ✓</div>
+          <div class="time">09:34 · 客服 Nan</div>
+        </div>
+        <div class="chan-note">— 此對話同時整合 LINE / WhatsApp / 站內訊息至同一收件匣 —</div>
+      </div>
+      <div class="chat-input">
+        <div class="ti">輸入訊息…（中文 / 廣東話 / English）</div>
+        <div class="send">➤</div>
+      </div>
+    </div>
+
+    <!-- ============ PROFILE ============ -->
+    <div class="screen" id="me">
+      <div class="prof-top">
+        <div class="av">陳</div>
+        <div class="nm">陳先生 Mr. Chen</div>
+        <div class="verified">🛡️ 已完成實名認證</div>
+      </div>
+      <div class="body-pad" style="padding-top:16px">
+        <div class="plist">
+          <div class="pitem"><span class="ico">👤</span><span class="t">個人資料與護照</span><span class="ar">›</span></div>
+          <div class="pitem"><span class="ico">🏠</span><span class="t">我的委託物件</span><span class="ar">›</span></div>
+          <div class="pitem"><span class="ico">📄</span><span class="t">我的合約與財報</span><span class="ar">›</span></div>
+          <div class="pitem"><span class="ico">🌐</span><span class="t">語言　<span class="muted" style="font-size:12px">繁體中文</span></span><span class="ar">›</span></div>
+          <div class="pitem"><span class="ico">🔔</span><span class="t">通知設定</span><span class="ar">›</span></div>
+        </div>
+        <div class="plist" style="margin-top:14px">
+          <div class="pitem"><span class="ico">🛡️</span><span class="t">帳戶安全與隱私</span><span class="ar">›</span></div>
+          <div class="pitem" onclick="go('login')"><span class="ico">↩︎</span><span class="t">登出</span><span class="ar">›</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- bottom tab bar -->
+  <div class="tabbar" id="tabbar">
+    <div class="tb active" data-s="home" onclick="go('home')"><span class="i">🏛️</span>首頁</div>
+    <div class="tb" data-s="search" onclick="go('search')"><span class="i">🔍</span>搜尋</div>
+    <div class="tb" data-s="props" onclick="go('props')"><span class="i">🏠</span>我的物件</div>
+    <div class="tb" data-s="cs" onclick="go('cs')"><span class="i">💬</span>客服</div>
+    <div class="tb" data-s="me" onclick="go('me')"><span class="i">◆</span>我的</div>
+  </div>
+</div>
+
+<div class="legend">
+  點擊體驗：<b>登入＋實名認證</b> → <b>我的物件</b>（綁定式，非姓名查詢）→ 物件詳情看 <b>房況／租金到帳／合約財報</b> → <b>客服</b>體驗即時翻譯。
+  <div class="pills">
+    <span class="pill">🛡️ 綁定式查詢，杜絕資料外洩</span>
+    <span class="pill">🌐 中↔泰即時翻譯，泰國客服直接服務</span>
+    <span class="pill">💬 LINE / WhatsApp / 站內 統一收件匣</span>
+    <span class="pill">💰 金額／合約結構化呈現，不經翻譯</span>
+  </div>
+</div>
+
+<script>
+const tabScreens = ['home','search','props','cs','me'];
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.screen-wrap .screen').forEach(s=>s.scrollTop=0);
+  // tab bar visibility + active state
+  const bar = document.getElementById('tabbar');
+  const onTab = tabScreens.includes(id);
+  bar.style.display = (id==='login') ? 'none' : 'flex';
+  document.querySelectorAll('.tabbar .tb').forEach(t=>{
+    t.classList.toggle('active', t.dataset.s===id);
+  });
+}
+function login(){ go('home'); }
+function openDetail(){ go('detail'); }
+function openDoc(){ go('detail'); setTimeout(()=>{ document.querySelectorAll('#detail .subtab')[2].click(); },50); }
+function dtab(el,pane){
+  el.parentElement.querySelectorAll('.subtab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('#detail .dpane').forEach(p=>p.style.display='none');
+  document.getElementById(pane).style.display='block';
+}
+// hide tab bar on login at start
+document.getElementById('tabbar').style.display='none';
+</script>
+</body>
+</html>
