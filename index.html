@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THRONE PROPERTY ｜ ERP 營運儀表板</title>
+<style>
+  :root{
+    --gold:#A67C52; --gold-d:#8a6440; --gold-l:#c9a47e;
+    --ink:#2c2620; --muted:#8c8175; --line:#e7ddd0;
+    --bg:#faf7f2; --panel:#ffffff; --cream:#f4ece1;
+    --pos:#5b7c5a; --neg:#b06a4f;
+    --serif:"Songti TC","Noto Serif TC",Georgia,"Times New Roman",serif;
+    --sans:-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px 64px}
+
+  /* header */
+  header{background:linear-gradient(180deg,#fff 0%,var(--cream) 100%);border-bottom:2px solid var(--gold);padding:30px 0 22px}
+  .brandrow{display:flex;align-items:center;gap:18px;justify-content:center;text-align:center;flex-direction:column}
+  .logo{width:60px;height:60px}
+  .brand-cn{font-family:var(--serif);font-size:22px;letter-spacing:.32em;color:var(--gold-d);padding-left:.32em}
+  .brand-en{font-family:var(--serif);font-size:30px;letter-spacing:.42em;color:var(--gold);font-weight:600;padding-left:.42em}
+  .brand-sub{font-size:11px;letter-spacing:.5em;color:var(--muted);padding-left:.5em}
+  .dash-title{text-align:center;margin-top:18px;font-family:var(--serif);font-size:18px;color:var(--ink);letter-spacing:.1em}
+  .meta{text-align:center;font-size:12px;color:var(--muted);margin-top:6px}
+
+  /* nav */
+  nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:24px 0 28px}
+  .tab{font-family:var(--serif);font-size:15px;letter-spacing:.12em;padding:9px 22px;border:1px solid var(--line);background:var(--panel);
+       color:var(--muted);cursor:pointer;border-radius:2px;transition:.18s}
+  .tab:hover{color:var(--gold-d);border-color:var(--gold-l)}
+  .tab.active{background:var(--gold);color:#fff;border-color:var(--gold);box-shadow:0 4px 14px rgba(166,124,82,.28)}
+
+  section{display:none;animation:fade .35s ease}
+  section.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .sec-h{font-family:var(--serif);font-size:17px;color:var(--gold-d);letter-spacing:.14em;margin:30px 0 14px;
+         display:flex;align-items:center;gap:10px}
+  .sec-h::before{content:"";width:18px;height:2px;background:var(--gold)}
+
+  /* kpi cards */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:3px;padding:18px 18px 16px}
+  .kpi .lab{font-size:12px;color:var(--muted);letter-spacing:.08em}
+  .kpi .val{font-family:var(--serif);font-size:27px;color:var(--ink);margin-top:7px;line-height:1.1;font-weight:600}
+  .kpi .val small{font-size:14px;color:var(--gold-d);font-weight:400;margin-left:2px}
+  .kpi .sub{font-size:11px;color:var(--muted);margin-top:5px}
+  .kpi .val.pos{color:var(--pos)} .kpi .val.neg{color:var(--neg)}
+
+  /* chart grid */
+  .grid{display:grid;gap:16px;margin-top:16px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:880px){.g2,.g3{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:18px 18px 14px}
+  .card h3{font-family:var(--serif);font-size:14px;color:var(--ink);letter-spacing:.08em;margin-bottom:14px;font-weight:600}
+  .card h3 span{font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0}
+
+  /* bars */
+  .bar{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:12.5px}
+  .bar .nm{width:118px;flex:0 0 118px;text-align:right;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar .track{flex:1;background:var(--cream);border-radius:2px;height:18px;position:relative;overflow:hidden}
+  .bar .fill{height:100%;background:linear-gradient(90deg,var(--gold-l),var(--gold));border-radius:2px;min-width:2px;transition:width .9s cubic-bezier(.2,.7,.2,1)}
+  .bar .vl{flex:0 0 86px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:12px;font-size:12px;color:var(--muted)}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
+
+  footer{text-align:center;color:var(--muted);font-size:11px;margin-top:48px;padding-top:18px;border-top:1px solid var(--line)}
+  .note{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6}
+</style>
+</head>
+<body>
+<header>
+  <div class="brandrow">
+    <svg class="logo" viewBox="0 0 100 100" aria-label="THRONE">
+      <g fill="#A67C52">
+        <rect x="14" y="6" width="72" height="5"/>
+        <rect x="19" y="14" width="62" height="4"/>
+        <rect x="24" y="21" width="52" height="4"/>
+        <rect x="40" y="27" width="6" height="60"/>
+        <rect x="48" y="27" width="6" height="60"/>
+        <rect x="56" y="27" width="6" height="60"/>
+      </g>
+    </svg>
+    <div>
+      <div class="brand-cn">碩 盛 國 際 不 動 產</div>
+      <div class="brand-en">THRONE</div>
+      <div class="brand-sub">PROPERTY</div>
+    </div>
+  </div>
+  <div class="dash-title">ERP 營運儀表板 · 製造 / 庫存 / 銷售 / 財會</div>
+  <div class="meta" id="meta"></div>
+</header>
+
+<div class="wrap">
+  <nav id="nav"></nav>
+  <section id="overview" class="active"></section>
+  <section id="sales"></section>
+  <section id="finance"></section>
+  <section id="inventory"></section>
+  <section id="manufacturing"></section>
+  <footer>
+    本儀表板由 ERP DEMO 範例資料庫彙整 · 採用 THRONE PROPERTY 品牌識別 ·
+    所有金額單位為新台幣 (NTD)
+    <div class="note">註：本資料為練習用範例資料庫（非碩盛國際不動產實際營運數據）。日期已線性換算至 2024–2026。</div>
+  </footer>
+</div>
+
+<script>
+const DATA = {"sales": {"kpi": {"order_amt": 198840500, "order_cnt": 386, "order_tax": 9941978, "avg_order": 515131, "inv_amt": 188834638, "inv_cnt": 365, "cust_cnt": 42}, "order_month": [{"label": "2024-07", "value": 4258650.0}, {"label": "2024-08", "value": 5173250.0}, {"label": "2024-09", "value": 6384200.0}, {"label": "2024-10", "value": 4796500.0}, {"label": "2024-11", "value": 9037000.0}, {"label": "2024-12", "value": 6169600.0}, {"label": "2025-01", "value": 8281150.0}, {"label": "2025-02", "value": 4264000.0}, {"label": "2025-03", "value": 2762250.0}, {"label": "2025-04", "value": 11180250.0}, {"label": "2025-05", "value": 10002150.0}, {"label": "2025-06", "value": 10265400.0}, {"label": "2025-07", "value": 7379900.0}, {"label": "2025-08", "value": 11245950.0}, {"label": "2025-09", "value": 7162500.0}, {"label": "2025-10", "value": 12461600.0}, {"label": "2025-11", "value": 10445150.0}, {"label": "2025-12", "value": 15726450.0}, {"label": "2026-01", "value": 6464450.0}, {"label": "2026-02", "value": 7169950.0}, {"label": "2026-03", "value": 10034600.0}, {"label": "2026-04", "value": 7991750.0}, {"label": "2026-05", "value": 12839200.0}, {"label": "2026-06", "value": 7344600.0}], "inv_month": [{"label": "2024-07", "value": 687850.0}, {"label": "2024-08", "value": 6642830.0}, {"label": "2024-09", "value": 4078758.0}, {"label": "2024-10", "value": 4256823.0}, {"label": "2024-11", "value": 6739277.0}, {"label": "2024-12", "value": 5547500.0}, {"label": "2025-01", "value": 10264419.0}, {"label": "2025-02", "value": 5141492.0}, {"label": "2025-03", "value": 4666600.0}, {"label": "2025-04", "value": 6913561.0}, {"label": "2025-05", "value": 9031058.0}, {"label": "2025-06", "value": 6726755.0}, {"label": "2025-07", "value": 13464777.0}, {"label": "2025-08", "value": 6138108.0}, {"label": "2025-09", "value": 5923975.0}, {"label": "2025-10", "value": 10962010.0}, {"label": "2025-11", "value": 13093592.0}, {"label": "2025-12", "value": 9689284.0}, {"label": "2026-01", "value": 12006962.0}, {"label": "2026-02", "value": 2761108.0}, {"label": "2026-03", "value": 8638473.0}, {"label": "2026-04", "value": 9517050.0}, {"label": "2026-05", "value": 7740195.0}, {"label": "2026-06", "value": 18202181.0}], "top_cust": [{"label": "茂光電", "value": 22169050.0}, {"label": "勤東工業", "value": 18327600.0}, {"label": "東弘自動化", "value": 12335150.0}, {"label": "東友電機", "value": 11827350.0}, {"label": "義弘能源", "value": 10971250.0}, {"label": "台瑞系統", "value": 10111050.0}, {"label": "台電子", "value": 9459750.0}, {"label": "耀聯實業", "value": 8440500.0}, {"label": "茂義實業", "value": 7668250.0}, {"label": "東勝能源", "value": 7505050.0}], "by_channel": [{"label": "直接客戶", "value": 98091800.0}, {"label": "經銷商", "value": 79216000.0}, {"label": "海外代理", "value": 21532700.0}], "by_region": [{"label": "北部", "value": 113395300.0}, {"label": "中部", "value": 42458850.0}, {"label": "海外", "value": 27582200.0}, {"label": "南部", "value": 15404150.0}], "by_sales": [{"label": "黃業務", "value": 77899450.0}, {"label": "0015", "value": 51252200.0}, {"label": "0019", "value": 27605850.0}, {"label": "0023", "value": 24254650.0}, {"label": "許倉管", "value": 14376150.0}, {"label": "林會計", "value": 3452200.0}], "top_prod": [{"label": "智能流程-採購件", "value": 18917300.0}, {"label": "G-BRF2-825-975/R", "value": 16587750.0}, {"label": "G-12-015A 150W CE 230V 德兒 黑", "value": 13787750.0}, {"label": "CONTACT PIN", "value": 13747950.0}, {"label": "42\"直下型背光模組", "value": 11247400.0}, {"label": "微波感應器", "value": 11242500.0}, {"label": "智能流程-自製件", "value": 10964900.0}, {"label": "CABLE 白色組裝測試", "value": 9625550.0}, {"label": "SMA R/A CRIMP PLUG", "value": 8369750.0}, {"label": "1-7-1111111001", "value": 7998900.0}]}, "finance": {"kpi": {"revenue": 188834638, "ap_amt": 91503691, "ap_paid": 64952213, "ap_open": 26551478, "ap_cnt": 403, "acct_cnt": 574, "gross": 97330947}, "ap_month": [{"label": "2024-07", "value": 2017814.0}, {"label": "2024-08", "value": 2473223.0}, {"label": "2024-09", "value": 2336444.0}, {"label": "2024-10", "value": 3297852.0}, {"label": "2024-11", "value": 3866008.0}, {"label": "2024-12", "value": 2554181.0}, {"label": "2025-01", "value": 5064054.0}, {"label": "2025-02", "value": 3170916.0}, {"label": "2025-03", "value": 3858410.0}, {"label": "2025-04", "value": 5241495.0}, {"label": "2025-05", "value": 2661309.0}, {"label": "2025-06", "value": 2157349.0}, {"label": "2025-07", "value": 2072482.0}, {"label": "2025-08", "value": 4699854.0}, {"label": "2025-09", "value": 2446346.0}, {"label": "2025-10", "value": 3286677.0}, {"label": "2025-11", "value": 7177553.0}, {"label": "2025-12", "value": 3553979.0}, {"label": "2026-01", "value": 4554508.0}, {"label": "2026-02", "value": 3278231.0}, {"label": "2026-03", "value": 4723666.0}, {"label": "2026-04", "value": 3509254.0}, {"label": "2026-05", "value": 6260552.0}, {"label": "2026-06", "value": 7241534.0}], "inv_month": [{"label": "2024-07", "value": 687850.0}, {"label": "2024-08", "value": 6642830.0}, {"label": "2024-09", "value": 4078758.0}, {"label": "2024-10", "value": 4256823.0}, {"label": "2024-11", "value": 6739277.0}, {"label": "2024-12", "value": 5547500.0}, {"label": "2025-01", "value": 10264419.0}, {"label": "2025-02", "value": 5141492.0}, {"label": "2025-03", "value": 4666600.0}, {"label": "2025-04", "value": 6913561.0}, {"label": "2025-05", "value": 9031058.0}, {"label": "2025-06", "value": 6726755.0}, {"label": "2025-07", "value": 13464777.0}, {"label": "2025-08", "value": 6138108.0}, {"label": "2025-09", "value": 5923975.0}, {"label": "2025-10", "value": 10962010.0}, {"label": "2025-11", "value": 13093592.0}, {"label": "2025-12", "value": 9689284.0}, {"label": "2026-01", "value": 12006962.0}, {"label": "2026-02", "value": 2761108.0}, {"label": "2026-03", "value": 8638473.0}, {"label": "2026-04", "value": 9517050.0}, {"label": "2026-05", "value": 7740195.0}, {"label": "2026-06", "value": 18202181.0}], "top_vendor": [{"label": "華材料", "value": 4544332.0}, {"label": "達科技", "value": 4312845.0}, {"label": "凱工業", "value": 3981810.0}, {"label": "耀電子", "value": 3944272.0}, {"label": "耀金屬", "value": 3894693.0}, {"label": "大貿易", "value": 3826700.0}, {"label": "晶科技", "value": 3532289.0}, {"label": "台零件", "value": 3531137.0}, {"label": "華工業", "value": 3431893.0}, {"label": "勤工業", "value": 3301317.0}], "paid_split": [{"label": "已付", "value": 64952213}, {"label": "未付", "value": 26551478}]}, "inventory": {"kpi": {"item_cnt": 367, "inv_val": 14870437, "instock": 366, "move_cnt": 3757, "move_in": 170425153, "move_out": 10907454836, "bom_cnt": 346}, "val_by_cat": [{"label": "原料", "value": 10956860.0}, {"label": "半成品", "value": 1772109.0}, {"label": "成品", "value": 767313.0}, {"label": "其他", "value": 717049.0}, {"label": "物料", "value": 657106.0}], "top_item": [{"label": "晶片電阻", "value": 1045153.0}, {"label": "積層電容", "value": 576988.0}, {"label": "CONTACT PIN", "value": 433636.0}, {"label": "SMD碳膜電阻,0805", "value": 267434.0}, {"label": "CABLE 白色組裝測試", "value": 200176.0}, {"label": "BODY", "value": 182229.0}, {"label": "電晶體", "value": 155539.0}, {"label": "SMA R/A CRIMP PLUG", "value": 150266.0}, {"label": "散熱片 G-015槽   (170m/m)", "value": 149244.0}, {"label": "9.5φ 圓銅條黃銅", "value": 143545.0}], "move_by_doc": [{"label": "511", "value": 1472.0}, {"label": "341", "value": 1029.0}, {"label": "231", "value": 917.0}, {"label": "581", "value": 339.0}]}, "manufacturing": {"kpi": {"wo_cnt": 348, "plan_qty": 265600, "made_qty": 255881, "scrap_qty": 3808, "yield": 98.5, "receipt_cnt": 339, "complete_rate": 96.3}, "wo_month": [{"label": "2024-07", "value": 10}, {"label": "2024-08", "value": 10}, {"label": "2024-09", "value": 14}, {"label": "2024-10", "value": 13}, {"label": "2024-11", "value": 14}, {"label": "2024-12", "value": 17}, {"label": "2025-01", "value": 13}, {"label": "2025-02", "value": 9}, {"label": "2025-03", "value": 13}, {"label": "2025-04", "value": 15}, {"label": "2025-05", "value": 14}, {"label": "2025-06", "value": 16}, {"label": "2025-07", "value": 14}, {"label": "2025-08", "value": 16}, {"label": "2025-09", "value": 14}, {"label": "2025-10", "value": 15}, {"label": "2025-11", "value": 20}, {"label": "2025-12", "value": 17}, {"label": "2026-01", "value": 12}, {"label": "2026-02", "value": 14}, {"label": "2026-03", "value": 15}, {"label": "2026-04", "value": 17}, {"label": "2026-05", "value": 17}, {"label": "2026-06", "value": 19}], "status": [{"label": "已確認/生產中", "value": 339}, {"label": "未確認", "value": 9}], "top_prod": [{"label": "CONTACT PIN", "value": 30922.0}, {"label": "BODY", "value": 14815.0}, {"label": "微波感應器", "value": 11514.0}, {"label": "智能流程-自製件", "value": 11418.0}, {"label": "JK25-24S05V REV.NI", "value": 10799.0}, {"label": "SMA R/A CRIMP PLUG", "value": 10650.0}, {"label": "MCX CRIMP m", "value": 10476.0}, {"label": "BNC \"Y\" LINK JACK-PLUG-JACK", "value": 9251.0}, {"label": "CABLE ASSEMBLY", "value": 9170.0}, {"label": "G-BRF2-825-975/R", "value": 8426.0}], "plan_vs_made": [{"label": "預計產量", "value": 265600}, {"label": "已生產量", "value": 255881}, {"label": "報廢量", "value": 3808}]}, "meta": {"company": "碩盛國際不動產 THRONE PROPERTY", "source": "ERP DEMO 範例資料庫", "exported": "2026-06-17", "period": "2024-01 ~ 2026-12"}};
+const GOLD=["#A67C52","#c9a47e","#8a6440","#d9c2a6","#6f4f33","#e3d2bb","#b98a5e","#a08566"];
+const fmtN = n => Math.round(n).toLocaleString("en-US");
+const fmtM = n => { const a=Math.abs(n);
+  if(a>=1e8) return (n/1e8).toFixed(2)+" 億";
+  if(a>=1e4) return (n/1e4).toFixed(0)+" 萬";
+  return fmtN(n); };
+const $ = (s,el=document)=>el.querySelector(s);
+
+function kpiCard(lab,val,sub,cls){
+  return `<div class="kpi"><div class="lab">${lab}</div>
+    <div class="val ${cls||''}">${val}</div>${sub?`<div class="sub">${sub}</div>`:''}</div>`;
+}
+function kpiRow(arr){return `<div class="kpis">${arr.join("")}</div>`;}
+
+function barCard(title,sub,items,money){
+  const max=Math.max(...items.map(d=>d.value),1);
+  const rows=items.map(d=>{
+    const w=(d.value/max*100).toFixed(1);
+    const vl=money?fmtM(d.value):fmtN(d.value);
+    return `<div class="bar"><div class="nm" title="${d.label}">${d.label}</div>
+      <div class="track"><div class="fill" style="width:${w}%"></div></div>
+      <div class="vl">${vl}</div></div>`;
+  }).join("");
+  return `<div class="card"><h3>${title} ${sub?`<span>${sub}</span>`:''}</h3>${rows}</div>`;
+}
+
+function lineCard(title,sub,items,money){
+  const W=560,H=210,pl=52,pr=14,pt=16,pb=34;
+  const xs=W-pl-pr, ys=H-pt-pb;
+  const vals=items.map(d=>d.value), max=Math.max(...vals,1), min=0;
+  const n=items.length;
+  const X=i=> pl + (n<=1?xs/2:(i/(n-1))*xs);
+  const Y=v=> pt + ys - ((v-min)/(max-min||1))*ys;
+  let path="", area="", dots="";
+  items.forEach((d,i)=>{ const x=X(i),y=Y(d.value);
+    path += (i?"L":"M")+x.toFixed(1)+" "+y.toFixed(1)+" ";
+    dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" fill="#A67C52"><title>${d.label}: ${money?fmtM(d.value):fmtN(d.value)}</title></circle>`;
+  });
+  area = `M${X(0).toFixed(1)} ${(pt+ys).toFixed(1)} `+path.replace(/^M/,"L")+`L${X(n-1).toFixed(1)} ${(pt+ys).toFixed(1)} Z`;
+  // y gridlines
+  let grid="",labs="";
+  for(let g=0;g<=4;g++){ const v=max*g/4, y=Y(v);
+    grid+=`<line x1="${pl}" y1="${y.toFixed(1)}" x2="${W-pr}" y2="${y.toFixed(1)}" stroke="#efe7da"/>`;
+    labs+=`<text x="${pl-8}" y="${(y+3).toFixed(1)}" text-anchor="end" font-size="9" fill="#a89c8c">${money?fmtM(v):fmtN(v)}</text>`;
+  }
+  // x labels (sparse)
+  let xlab=""; const step=Math.ceil(n/8);
+  items.forEach((d,i)=>{ if(i%step===0||i===n-1){
+    xlab+=`<text x="${X(i).toFixed(1)}" y="${H-12}" text-anchor="middle" font-size="9" fill="#a89c8c">${d.label.slice(2)}</text>`;}});
+  return `<div class="card"><h3>${title} ${sub?`<span>${sub}</span>`:''}</h3>
+    <svg viewBox="0 0 ${W} ${H}">
+      ${grid}${labs}
+      <path d="${area}" fill="url(#agrad)" opacity="0.25"/>
+      <defs><linearGradient id="agrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#A67C52"/><stop offset="1" stop-color="#A67C52" stop-opacity="0"/></linearGradient></defs>
+      <path d="${path}" fill="none" stroke="#A67C52" stroke-width="2"/>
+      ${dots}${xlab}
+    </svg></div>`;
+}
+
+function donutCard(title,sub,items,money){
+  const total=items.reduce((s,d)=>s+d.value,0)||1;
+  const cx=90,cy=90,r=66,sw=26; const C=2*Math.PI*r;
+  let off=0, arcs="";
+  items.forEach((d,i)=>{ const frac=d.value/total; const len=frac*C;
+    arcs+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${GOLD[i%GOLD.length]}"
+      stroke-width="${sw}" stroke-dasharray="${len.toFixed(2)} ${(C-len).toFixed(2)}"
+      stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"><title>${d.label}: ${(frac*100).toFixed(1)}%</title></circle>`;
+    off+=len;
+  });
+  const leg=items.map((d,i)=>`<span><i style="background:${GOLD[i%GOLD.length]}"></i>${d.label} ${(d.value/total*100).toFixed(1)}%</span>`).join("");
+  return `<div class="card"><h3>${title} ${sub?`<span>${sub}</span>`:''}</h3>
+    <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+      <svg viewBox="0 0 180 180" style="width:180px;flex:0 0 180px">${arcs}
+        <text x="90" y="86" text-anchor="middle" font-size="12" fill="#8c8175">合計</text>
+        <text x="90" y="106" text-anchor="middle" font-size="15" font-weight="600" fill="#2c2620">${money?fmtM(total):fmtN(total)}</text>
+      </svg>
+      <div class="legend" style="flex:1">${leg}</div>
+    </div></div>`;
+}
+
+/* ---------- render ---------- */
+const M=DATA;
+$("#meta").textContent = `資料來源：${M.meta.source}　·　匯出日：${M.meta.exported}　·　期間：${M.meta.period}`;
+
+const TABS=[["overview","總覽"],["sales","銷售"],["finance","財會"],["inventory","庫存"],["manufacturing","製造"]];
+$("#nav").innerHTML = TABS.map(([id,nm],i)=>`<div class="tab ${i===0?'active':''}" data-t="${id}">${nm}</div>`).join("");
+
+// OVERVIEW
+const s=M.sales.kpi, f=M.finance.kpi, inv=M.inventory.kpi, mf=M.manufacturing.kpi;
+$("#overview").innerHTML =
+  `<div class="sec-h">營運總覽 OVERVIEW</div>`+
+  kpiRow([
+    kpiCard("銷售訂單總額", fmtM(s.order_amt)+" <small>元</small>", `${s.order_cnt} 張訂單`),
+    kpiCard("銷貨收入", fmtM(f.revenue)+" <small>元</small>", `${s.inv_cnt} 張銷貨單`),
+    kpiCard("應付帳款", fmtM(f.ap_amt)+" <small>元</small>", `未付 ${fmtM(f.ap_open)}`),
+    kpiCard("收支毛差", fmtM(f.gross)+" <small>元</small>", "銷貨收入 − 應付", f.gross>=0?"pos":"neg"),
+    kpiCard("庫存總值", fmtM(inv.inv_val)+" <small>元</small>", `${inv.item_cnt} 個品號`),
+    kpiCard("製令生產良率", mf.yield+" <small>%</small>", `達成率 ${mf.complete_rate}%`,"pos"),
+  ])+
+  `<div class="sec-h">收入 vs 支出 月趨勢</div>`+
+  `<div class="grid g2">
+     ${lineCard("銷貨收入","按月 · NTD",M.sales.inv_month,true)}
+     ${lineCard("應付帳款","按月 · NTD",M.finance.ap_month,true)}
+   </div>`+
+  `<div class="grid g2">
+     ${barCard("銷售前十大客戶","訂單金額 · NTD",M.sales.top_cust,true)}
+     ${donutCard("庫存金額結構","依品號類別",M.inventory.val_by_cat,true)}
+   </div>`;
+
+// SALES
+$("#sales").innerHTML =
+  `<div class="sec-h">銷售模組 SALES</div>`+
+  kpiRow([
+    kpiCard("訂單總額", fmtM(s.order_amt)+" <small>元</small>", `含稅額 ${fmtM(s.order_tax)}`),
+    kpiCard("訂單張數", fmtN(s.order_cnt)+" <small>張</small>", `平均 ${fmtM(s.avg_order)}/張`),
+    kpiCard("銷貨收入", fmtM(s.inv_amt)+" <small>元</small>", `${s.inv_cnt} 張銷貨單`),
+    kpiCard("交易客戶數", fmtN(s.cust_cnt)+" <small>家</small>"),
+  ])+
+  `<div class="grid g2">
+     ${lineCard("訂單金額月趨勢","按月 · NTD",M.sales.order_month,true)}
+     ${lineCard("銷貨收入月趨勢","按月 · NTD",M.sales.inv_month,true)}
+   </div>`+
+  `<div class="grid g2">
+     ${barCard("前十大客戶","訂單金額 · NTD",M.sales.top_cust,true)}
+     ${barCard("熱銷品項 TOP10","訂單金額 · NTD",M.sales.top_prod,true)}
+   </div>`+
+  `<div class="grid g3">
+     ${donutCard("通路別占比","訂單金額",M.sales.by_channel,true)}
+     ${donutCard("地區別占比","訂單金額",M.sales.by_region,true)}
+     ${barCard("業務員業績","訂單金額 · NTD",M.sales.by_sales,true)}
+   </div>`;
+
+// FINANCE
+$("#finance").innerHTML =
+  `<div class="sec-h">財會模組 FINANCE</div>`+
+  kpiRow([
+    kpiCard("銷貨收入", fmtM(f.revenue)+" <small>元</small>"),
+    kpiCard("應付帳款", fmtM(f.ap_amt)+" <small>元</small>", `${f.ap_cnt} 張憑單`),
+    kpiCard("已付金額", fmtM(f.ap_paid)+" <small>元</small>","pos"),
+    kpiCard("未付餘額", fmtM(f.ap_open)+" <small>元</small>","neg"),
+    kpiCard("收支毛差", fmtM(f.gross)+" <small>元</small>","", f.gross>=0?"pos":"neg"),
+    kpiCard("會計科目數", fmtN(f.acct_cnt)+" <small>個</small>"),
+  ])+
+  `<div class="grid g2">
+     ${lineCard("應付帳款月趨勢","按月 · NTD",M.finance.ap_month,true)}
+     ${lineCard("銷貨收入月趨勢","按月 · NTD",M.finance.inv_month,true)}
+   </div>`+
+  `<div class="grid g2">
+     ${barCard("前十大供應商","應付金額 · NTD",M.finance.top_vendor,true)}
+     ${donutCard("應付帳款付款狀況","已付 vs 未付",M.finance.paid_split,true)}
+   </div>`;
+
+// INVENTORY
+$("#inventory").innerHTML =
+  `<div class="sec-h">庫存模組 INVENTORY</div>`+
+  kpiRow([
+    kpiCard("品號總數", fmtN(inv.item_cnt)+" <small>個</small>", `有庫存 ${inv.instock} 個`),
+    kpiCard("庫存總值", fmtM(inv.inv_val)+" <small>元</small>"),
+    kpiCard("庫存異動筆數", fmtN(inv.move_cnt)+" <small>筆</small>"),
+    kpiCard("BOM 用量明細", fmtN(inv.bom_cnt)+" <small>筆</small>"),
+  ])+
+  `<div class="grid g2">
+     ${donutCard("庫存金額結構","依品號類別",M.inventory.val_by_cat,true)}
+     ${barCard("庫存金額 TOP10 品項","庫存金額 · NTD",M.inventory.top_item,true)}
+   </div>`+
+  `<div class="grid g2">
+     ${barCard("各類別庫存金額","NTD",M.inventory.val_by_cat,true)}
+     ${barCard("庫存異動單別分布","異動筆數",M.inventory.move_by_doc,false)}
+   </div>`;
+
+// MANUFACTURING
+$("#manufacturing").innerHTML =
+  `<div class="sec-h">製造模組 MANUFACTURING</div>`+
+  kpiRow([
+    kpiCard("製令張數", fmtN(mf.wo_cnt)+" <small>張</small>", `生產入庫 ${mf.receipt_cnt} 張`),
+    kpiCard("預計產量", fmtN(mf.plan_qty)+" <small>PCS</small>"),
+    kpiCard("已生產量", fmtN(mf.made_qty)+" <small>PCS</small>", `達成率 ${mf.complete_rate}%`,"pos"),
+    kpiCard("報廢數量", fmtN(mf.scrap_qty)+" <small>PCS</small>","neg"),
+    kpiCard("生產良率", mf.yield+" <small>%</small>","","pos"),
+  ])+
+  `<div class="grid g2">
+     ${lineCard("製令開立月趨勢","按月 · 張數",M.manufacturing.wo_month,false)}
+     ${donutCard("製令狀態分布","張數",M.manufacturing.status,false)}
+   </div>`+
+  `<div class="grid g2">
+     ${barCard("主力生產品項 TOP10","已生產量 · PCS",M.manufacturing.top_prod,false)}
+     ${barCard("產量結構","PCS",M.manufacturing.plan_vs_made,false)}
+   </div>`;
+
+// tab switching
+$("#nav").addEventListener("click",e=>{
+  const t=e.target.closest(".tab"); if(!t) return;
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll("section").forEach(x=>x.classList.remove("active"));
+  t.classList.add("active");
+  $("#"+t.dataset.t).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+</script>
+</body>
+</html>
