@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THRONE PROPERTY 微信小程序｜可点击原型 PROTOTYPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0a1730; --navy-2:#0c1d3d; --navy-3:#12274d; --navy-deep:#060f22;
+  --gold:#c8a35a; --gold-l:#e7cf9b; --gold-d:#a07d3a;
+  --cream:#f5efe2; --paper:#f3f4f6; --ink:#1a2438; --muted:#8b93a5;
+  --line:rgba(200,163,90,.22); --line-2:#e9eaee;
+  --pos:#3f8c5e; --neg:#c0623f; --warn:#c9952f; --wx:#07c160;
+  --serif-en:"Cormorant Garamond",Georgia,serif;
+  --serif:"Noto Serif SC",serif;
+  --sans:"Noto Sans SC",-apple-system,"PingFang SC",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:
+  radial-gradient(1200px 600px at 50% -10%,#16294d 0%,var(--navy) 45%,var(--navy-deep) 100%);
+  min-height:100vh;color:var(--ink);-webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;align-items:center;padding:34px 16px 60px}
+
+.page-head{text-align:center;color:#e8ecf5;max-width:780px;margin-bottom:24px}
+.page-head .eyebrow{font-family:var(--serif-en);letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold);font-size:13px;font-weight:600;margin-bottom:10px}
+.page-head h1{font-family:var(--serif);font-weight:600;font-size:23px;letter-spacing:.04em;margin-bottom:10px}
+.page-head p{color:#aeb8cd;font-size:13.5px;line-height:1.7;font-weight:300}
+.proto-badge{display:inline-flex;gap:8px;align-items:center;margin-top:14px;font-size:11px;letter-spacing:.12em;
+  color:var(--gold-l);border:1px solid var(--line);border-radius:30px;padding:5px 16px}
+.proto-badge .wxdot{width:8px;height:8px;border-radius:50%;background:var(--wx)}
+
+/* ---- phone frame ---- */
+.phone{width:390px;max-width:100%;height:830px;background:var(--paper);border-radius:46px;
+  box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 11px #0b1426,0 0 0 13px #1d2c4a;
+  position:relative;overflow:hidden;display:flex;flex-direction:column}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:150px;height:26px;
+  background:#0b1426;border-radius:0 0 18px 18px;z-index:60}
+
+/* ---- WeChat chrome ---- */
+.wx-status{height:42px;flex:0 0 42px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 26px;font-size:12.5px;font-weight:600;color:#fff;z-index:50;background:var(--navy)}
+.wx-nav{flex:0 0 46px;background:var(--navy);display:flex;align-items:center;justify-content:center;
+  position:relative;color:#fff;z-index:50}
+.wx-nav .title{font-family:var(--serif);font-size:16px;letter-spacing:.06em;font-weight:600}
+.wx-nav .capsule{position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  width:80px;height:30px;border-radius:18px;border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.06);display:flex;align-items:center}
+.wx-nav .capsule .c{flex:1;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px}
+.wx-nav .capsule .c:first-child{border-right:1px solid rgba(255,255,255,.2);letter-spacing:1px}
+.wx-nav .capsule .dot{width:14px;height:14px;border:1.6px solid #fff;border-radius:50%;position:relative}
+.wx-nav .capsule .dot::after{content:"";position:absolute;inset:3px;border-radius:50%;border:1.4px solid #fff;border-bottom-color:transparent}
+.wx-nav .back{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:22px;cursor:pointer;display:none}
+
+/* ---- screens ---- */
+.screen-wrap{flex:1;position:relative;overflow:hidden}
+.screen{position:absolute;inset:0;overflow-y:auto;display:none;flex-direction:column}
+.screen.active{display:flex;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.screen::-webkit-scrollbar{width:0}
+.body-pad{padding:16px 16px 96px}
+
+/* ---- generic ---- */
+.gold{color:var(--gold-d)}
+.muted{color:var(--muted)}
+.tabular{font-variant-numeric:tabular-nums}
+.sec-title{font-family:var(--serif);font-size:15px;color:var(--ink);letter-spacing:.04em;margin:20px 0 11px;
+  display:flex;align-items:center;gap:9px}
+.sec-title::before{content:"";width:15px;height:2px;background:var(--gold)}
+.sec-title .more{margin-left:auto;font-family:var(--sans);font-size:12px;color:var(--gold-d);font-weight:400}
+.card{background:#fff;border-radius:13px;padding:16px;box-shadow:0 4px 16px rgba(20,30,60,.05)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font-size:15px;
+  padding:14px;border-radius:11px;border:none;cursor:pointer;font-weight:500}
+.btn.solid{background:linear-gradient(120deg,var(--gold-d),var(--gold));color:#fff}
+.btn.wx{background:var(--wx);color:#fff}
+.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--gold-d)}
+.btn.sm{padding:8px 15px;width:auto;font-size:13px;border-radius:9px}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:3px 9px;border-radius:18px;font-weight:500}
+.tag.gold{background:rgba(200,163,90,.14);color:var(--gold-d)}
+.tag.pos{background:rgba(63,140,94,.13);color:var(--pos)}
+.tag.neg{background:rgba(192,98,63,.12);color:var(--neg)}
+.tag.warn{background:rgba(201,149,47,.14);color:var(--warn)}
+.tag.p2{background:rgba(139,147,165,.14);color:var(--muted)}
+.row{display:flex;align-items:center;gap:12px}.spacer{flex:1}
+
+/* ---- auth (mini program flow) ---- */
+#auth{background:linear-gradient(170deg,var(--navy-2),var(--navy-deep));color:#fff}
+.auth-inner{padding:30px 28px;display:flex;flex-direction:column;height:100%}
+.logo-badge{width:66px;height:66px;border-radius:18px;border:1px solid var(--line);margin:14px auto 12px;
+  display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.03);
+  font-family:var(--serif-en);font-size:26px;color:var(--gold)}
+#auth h2{text-align:center;font-family:var(--serif-en);font-size:21px;letter-spacing:.28em;font-weight:600}
+#auth .sub{text-align:center;color:#9aa6bf;font-size:11.5px;letter-spacing:.18em;margin:6px 0 26px}
+.auth-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;
+  padding:18px;font-size:13px;color:#cdd6e8;line-height:1.7;margin-bottom:14px}
+.auth-card .h{display:flex;align-items:center;gap:8px;color:#fff;font-size:14px;font-weight:500;margin-bottom:8px}
+.auth-foot{margin-top:auto;text-align:center;font-size:11px;color:#5e6a85;line-height:1.7}
+
+/* ---- home ---- */
+.member-card{margin:14px 16px 0;background:linear-gradient(120deg,var(--navy-2),var(--navy-3) 60%,#1c3563);
+  border-radius:17px;padding:17px;color:#fff;position:relative;overflow:hidden}
+.member-card::after{content:"";position:absolute;right:-40px;top:-40px;width:140px;height:140px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,163,90,.28),transparent 70%)}
+.member-card .tier{font-family:var(--serif-en);letter-spacing:.26em;color:var(--gold-l);font-size:11.5px}
+.member-card .name{font-family:var(--serif);font-size:18px;margin-top:7px}
+.member-card .pts{display:flex;align-items:baseline;gap:7px;margin-top:12px}
+.member-card .pts .n{font-family:var(--serif);font-size:28px;color:var(--gold-l);line-height:1}
+.member-card .pts .u{font-size:11.5px;color:#b9c3d8}
+.member-card .pts .go{margin-left:auto;font-size:12px;border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:5px 12px;cursor:pointer}
+.member-card .stats{display:flex;gap:18px;margin-top:13px;padding-top:12px;border-top:1px solid rgba(255,255,255,.1)}
+.member-card .stats .v{font-family:var(--serif);font-size:16px}
+.member-card .stats .l{font-size:10px;color:#aab4cb;margin-top:2px}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:16px 16px 0}
+.quick .q{background:#fff;border-radius:12px;padding:13px 4px;text-align:center;cursor:pointer}
+.quick .ico{font-size:20px;margin-bottom:5px}.quick .lab{font-size:11px}
+.notice{display:flex;gap:10px;align-items:center;background:#fff;border-left:3px solid var(--pos);
+  border-radius:10px;padding:11px 13px;font-size:12.5px;line-height:1.5}
+.hscroll{display:flex;gap:11px;overflow-x:auto;margin:0 -16px;padding:0 16px 4px}
+.hscroll::-webkit-scrollbar{height:0}
+.life-card{flex:0 0 188px;background:#fff;border-radius:13px;overflow:hidden;cursor:pointer}
+.life-card .ph{height:100px;background-size:cover;background-position:center}
+.life-card .ct{padding:10px 11px 12px}.life-card .cat{font-size:10.5px;color:var(--gold-d)}
+.life-card h4{font-family:var(--serif);font-size:13px;font-weight:600;margin-top:4px;line-height:1.4}
+
+/* ---- property ---- */
+.kyc-strip{display:flex;gap:8px;align-items:center;background:#fff;border-radius:10px;padding:10px 12px;
+  margin-bottom:14px;font-size:12px;color:var(--pos)}
+.prop{background:#fff;border-radius:13px;padding:14px;margin-bottom:11px;cursor:pointer}
+.prop .pj{font-family:var(--serif);font-size:15px;font-weight:600}
+.prop .unit{font-size:12px;color:var(--muted);margin-top:3px}
+.prop .meta{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+.prop .rentline{display:flex;align-items:center;margin-top:12px;padding-top:11px;border-top:1px dashed var(--line-2);font-size:12.5px}
+
+/* ---- detail ---- */
+.detail-hero{height:160px;background-size:cover;background-position:center;position:relative}
+.detail-hero .ov{position:absolute;left:0;right:0;bottom:0;padding:28px 16px 13px;color:#fff;
+  background:linear-gradient(transparent,rgba(6,15,34,.85))}
+.detail-hero .ov h3{font-family:var(--serif);font-size:17px}
+.detail-hero .ov .u{font-size:12px;color:#cdd6e8;margin-top:3px}
+.subtabs{display:flex;gap:4px;padding:12px 14px 0;background:#fff}
+.subtab{flex:1;text-align:center;font-size:12.5px;padding:9px 6px;border-bottom:2px solid transparent;color:var(--muted);cursor:pointer}
+.subtab.active{color:var(--navy);border-bottom-color:var(--gold);font-weight:500}
+.kv{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line-2);font-size:13.5px}
+.kv:last-child{border-bottom:none}.kv .k{color:var(--muted)}.kv .v{font-weight:500}
+.doc{display:flex;align-items:center;gap:11px;background:#fff;border-radius:11px;padding:13px;margin-bottom:9px;cursor:pointer}
+.doc .fico{width:38px;height:38px;border-radius:9px;background:rgba(192,98,63,.1);color:var(--neg);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:0 0 38px}
+.doc .dinfo{flex:1}.doc .dn{font-size:13.5px;font-weight:500}.doc .dm{font-size:11px;color:var(--muted);margin-top:2px}
+.doc .dl{color:var(--gold-d);font-size:17px}
+.rent-hero{background:#fff;border-left:3px solid var(--pos);border-radius:12px;padding:16px;text-align:center;margin-bottom:13px}
+.rent-hero .amt{font-family:var(--serif);font-size:26px;color:var(--pos)}
+.rent-hero .st{font-size:12px;color:var(--pos);margin-top:4px}
+
+/* ---- points ---- */
+.pts-hero{margin:14px 16px 0;background:linear-gradient(125deg,#1a2c52,#24407a 55%,#3a5da0);
+  border-radius:18px;padding:20px;color:#fff;text-align:center;position:relative;overflow:hidden}
+.pts-hero::before{content:"◆";position:absolute;font-size:120px;color:rgba(200,163,90,.1);right:-8px;top:-26px;font-family:var(--serif)}
+.pts-hero .lab{font-size:12px;color:#bcc7dd;letter-spacing:.16em}
+.pts-hero .big{font-family:var(--serif);font-size:38px;color:var(--gold-l);margin:5px 0 2px;line-height:1}
+.pts-hero .tier{font-size:11.5px;color:#dfe6f2}
+.pts-hero .ptrack{height:6px;background:rgba(255,255,255,.16);border-radius:5px;overflow:hidden;margin:13px 0 6px}
+.pts-hero .pfill{height:100%;width:64%;background:linear-gradient(90deg,var(--gold),var(--gold-l));border-radius:5px}
+.pts-hero .pinfo{font-size:11px;color:#bcc7dd;display:flex;justify-content:space-between}
+.reward{display:flex;gap:12px;background:#fff;border-radius:13px;padding:10px;margin-bottom:10px;cursor:pointer}
+.reward .rimg{width:74px;height:74px;border-radius:10px;flex:0 0 74px;background-size:cover;background-position:center}
+.reward .ri{flex:1;display:flex;flex-direction:column}
+.reward .ri h4{font-family:var(--serif);font-size:14px;font-weight:600}
+.reward .ri .d{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.5}
+.reward .foot{display:flex;align-items:center;margin-top:auto;padding-top:7px}
+.reward .cost{font-family:var(--serif);color:var(--gold-d);font-size:14.5px}
+.reward .cost small{font-size:11px;color:var(--muted);font-family:var(--sans)}
+
+/* ---- profile ---- */
+.prof-top{background:var(--navy);color:#fff;padding:22px 18px;text-align:center}
+.prof-top .av{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--gold-d),var(--gold-l));
+  margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:22px}
+.prof-top .nm{font-family:var(--serif);font-size:17px}
+.prof-top .verified{display:inline-flex;gap:5px;align-items:center;font-size:11px;color:#8fe0a8;margin-top:6px}
+.pitem{display:flex;align-items:center;gap:13px;background:#fff;padding:15px;border-bottom:1px solid var(--line-2);cursor:pointer}
+.pitem .ico{font-size:17px;width:22px;text-align:center}.pitem .t{flex:1;font-size:14px}.pitem .ar{color:var(--muted)}
+.pitem:first-child{border-radius:12px 12px 0 0}.pitem:last-child{border-radius:0 0 12px 12px;border-bottom:none}
+
+/* ---- CS ---- */
+#cs{background:#ededed}
+.trans-bar{display:flex;align-items:center;gap:8px;background:rgba(200,163,90,.12);padding:9px 16px;
+  font-size:11.5px;color:var(--gold-d);border-bottom:1px solid var(--line-2)}
+.trans-bar .sw{margin-left:auto;width:34px;height:19px;border-radius:20px;background:var(--gold);position:relative}
+.trans-bar .sw::after{content:"";position:absolute;top:2px;right:2px;width:15px;height:15px;border-radius:50%;background:#fff}
+.chat{flex:1;padding:15px;display:flex;flex-direction:column;gap:13px}
+.msg{max-width:80%;display:flex;flex-direction:column;gap:3px}
+.msg.in{align-self:flex-start}.msg.out{align-self:flex-end;align-items:flex-end}
+.bubble{padding:10px 13px;border-radius:8px;font-size:14px;line-height:1.5}
+.msg.in .bubble{background:#fff}
+.msg.out .bubble{background:var(--wx);color:#fff}
+.msg .orig{font-size:11px;color:var(--muted);padding:0 4px}.msg .orig .lbl{color:var(--gold-d)}
+.msg .time{font-size:10px;color:#aab2c4;padding:0 4px}
+.chan-note{font-size:11px;color:var(--muted);text-align:center;padding:6px}
+.chat-input{display:flex;gap:9px;padding:10px 13px;background:#f7f7f7;border-top:1px solid var(--line-2);align-items:center}
+.chat-input .ti{flex:1;background:#fff;border-radius:8px;padding:10px 13px;color:var(--muted);font-size:13.5px}
+.chat-input .send{width:38px;height:38px;border-radius:8px;background:var(--wx);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 38px;cursor:pointer}
+
+/* ---- tabbar ---- */
+.tabbar{position:absolute;bottom:0;left:0;right:0;height:58px;background:#f7f7f8;border-top:1px solid #dcdce0;
+  display:flex;z-index:40}
+.tabbar .tb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  cursor:pointer;color:#7a7e87;font-size:10.5px}
+.tabbar .tb .i{font-size:20px}
+.tabbar .tb.active{color:var(--gold-d)}
+
+.legend{max-width:820px;margin-top:28px;color:#aeb8cd;font-size:12.5px;line-height:1.9;text-align:center}
+.legend b{color:var(--gold-l);font-weight:500}
+.legend .pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:13px}
+.legend .pill{border:1px solid var(--line);border-radius:30px;padding:5px 14px;font-size:11.5px;color:#cdd6e8}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <div class="eyebrow">WeChat Mini Program</div>
+  <h1>碩盛國際 · 微信小程序版原型</h1>
+  <p>面向中港市場的微信小程序入口（簡體介面），與海外 App 共用同一套後端。<br>
+  含微信導覽列與膠囊按鈕外框，呈現小程序原生體驗。此為示意原型。</p>
+  <span class="proto-badge"><span class="wxdot"></span>PROTOTYPE · 簡體中文 · 示意數據</span>
+</div>
+
+<div class="phone">
+  <div class="notch"></div>
+  <div class="wx-status"><span>9:41</span><span>５G ▮▮▮ 100%</span></div>
+  <div class="wx-nav">
+    <span class="back" id="navback" onclick="go(backTo)">‹</span>
+    <span class="title" id="navtitle">碩盛国际</span>
+    <span class="capsule"><span class="c">•••</span><span class="c"><span class="dot"></span></span></span>
+  </div>
+
+  <div class="screen-wrap">
+
+    <!-- ===== AUTH (mini program授权 + 实名) ===== -->
+    <div class="screen active" id="auth" data-title="登录授权">
+      <div class="auth-inner">
+        <div class="logo-badge">T</div>
+        <h2>THRONE</h2>
+        <div class="sub">PROPERTY · 全球资产 × 生活管家</div>
+
+        <div class="auth-card">
+          <div class="h">📱 微信一键授权登录</div>
+          获取你的微信昵称与手机号，快速创建会员身份。
+        </div>
+        <div class="auth-card">
+          <div class="h">🛡️ 实名认证（KYC）</div>
+          上传证件完成实名后，系统<b style="color:var(--gold-l)">仅显示绑定在你名下</b>的委托物业，
+          不开放以姓名查询他人资料，确保财务隐私。
+        </div>
+
+        <button class="btn wx" onclick="login()">微信授权登录</button>
+        <div style="height:10px"></div>
+        <button class="btn ghost" onclick="login()">已有账号 · 完成实名认证</button>
+
+        <div class="auth-foot">
+          支持 简体 / 繁体 / English / ภาษาไทย<br>
+          © THRONE PROPERTY · 原型展示
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOME ===== -->
+    <div class="screen" id="home" data-title="碩盛国际">
+      <div class="member-card">
+        <div class="tier">◆ ROYAL MEMBER · 钻石会员</div>
+        <div class="name">陈先生 Mr. Chen</div>
+        <div class="pts">
+          <span class="n tabular">28,600</span><span class="u">会员积分</span>
+          <span class="go" onclick="go('points')">积分中心 ›</span>
+        </div>
+        <div class="stats">
+          <div><div class="v">3</div><div class="l">委托物业</div></div>
+          <div><div class="v">2</div><div class="l">出租中</div></div>
+          <div><div class="v tabular">¥58,400</div><div class="l">本月已收租</div></div>
+        </div>
+      </div>
+
+      <div class="quick">
+        <div class="q" onclick="go('props')"><div class="ico">🏠</div><div class="lab">我的物业</div></div>
+        <div class="q" onclick="go('points')"><div class="ico">🎁</div><div class="lab">积分兑换</div></div>
+        <div class="q" onclick="go('home')"><div class="ico">🌆</div><div class="lab">在地生活</div></div>
+        <div class="q" onclick="go('cs')"><div class="ico">💬</div><div class="lab">专属客服</div></div>
+      </div>
+
+      <div class="body-pad" style="padding-top:14px">
+        <div class="notice">
+          <span>✓</span>
+          <div><b>曼谷 The Reserve · 28F-A</b> 5 月租金 ¥21,000 已到账，赠 <b class="gold">2,100 积分</b>。
+          <div class="muted" style="margin-top:2px">2026/06/03 · 已汇入指定账户</div></div>
+        </div>
+
+        <div class="sec-title">在地生活精选 <span class="more">更多 ›</span></div>
+        <div class="hscroll">
+          <div class="life-card"><div class="ph" style="background-image:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=70')"></div>
+            <div class="ct"><div class="cat">美食 · 曼谷</div><h4>隐藏版 5 间米其林街头料理</h4></div></div>
+          <div class="life-card"><div class="ph" style="background-image:url('https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=400&q=70')"></div>
+            <div class="ct"><div class="cat">SPA · 会员独享</div><h4>全身按摩 90 分钟 积分兑换</h4></div></div>
+          <div class="life-card"><div class="ph" style="background-image:url('https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=400&q=70')"></div>
+            <div class="ct"><div class="cat">节庆 · 旅游</div><h4>2026 泼水节 Songkran 攻略</h4></div></div>
+        </div>
+
+        <div class="sec-title">为你精选物业 <span class="more">更多 ›</span></div>
+        <div class="prop" onclick="openDetail()">
+          <div class="row"><div><div class="pj">The Reserve Sukhumvit</div>
+          <div class="unit">🇹🇭 泰国 曼谷 · 1 房 38㎡</div></div><div class="spacer"></div>
+          <span class="tag gold">回报 6.2%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PROPERTIES ===== -->
+    <div class="screen" id="props" data-title="我的物业">
+      <div class="body-pad">
+        <div class="kyc-strip">🛡️ 已实名认证 · 以下为绑定在 <b>陈先生</b> 名下之委托物业</div>
+
+        <div class="prop" onclick="openDetail()">
+          <div class="row"><div><div class="pj">The Reserve Sukhumvit</div>
+          <div class="unit">🇹🇭 曼谷 · 28 楼 A 室 · Unit 28F-A</div></div><div class="spacer"></div>
+          <span class="tag pos">出租中</span></div>
+          <div class="meta"><span class="tag gold">代租代管</span><span class="tag p2">租约至 2026/12</span></div>
+          <div class="rentline"><span class="muted">上月租金</span><div class="spacer"></div>
+          <span class="tabular" style="font-weight:600">฿ 32,000</span><span class="tag pos" style="margin-left:8px">已到账</span></div>
+        </div>
+
+        <div class="prop" onclick="openDetail()">
+          <div class="row"><div><div class="pj">Sky Garden Residence</div>
+          <div class="unit">🇯🇵 大阪 · 15 楼 03 室 · Unit 1503</div></div><div class="spacer"></div>
+          <span class="tag pos">出租中</span></div>
+          <div class="meta"><span class="tag gold">代租代管</span><span class="tag p2">租约至 2027/03</span></div>
+          <div class="rentline"><span class="muted">上月租金</span><div class="spacer"></div>
+          <span class="tabular" style="font-weight:600">¥ 185,000</span><span class="tag warn" style="margin-left:8px">处理中</span></div>
+        </div>
+
+        <div class="prop" onclick="openDetail()">
+          <div class="row"><div><div class="pj">Canary Wharf Tower</div>
+          <div class="unit">🇬🇧 伦敦 · 9 楼 02 室 · Unit 0902</div></div><div class="spacer"></div>
+          <span class="tag neg">待出租</span></div>
+          <div class="meta"><span class="tag gold">代租代管</span><span class="tag p2">招租中</span></div>
+          <div class="rentline"><span class="muted">状态</span><div class="spacer"></div>
+          <span class="muted">空置 · 中介带看 3 组</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== DETAIL ===== -->
+    <div class="screen" id="detail" data-title="物业详情">
+      <div class="detail-hero" style="background-image:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=75')">
+        <div class="ov"><h3>The Reserve Sukhumvit</h3><div class="u">🇹🇭 曼谷 · 28 楼 A 室 · Unit 28F-A</div></div>
+      </div>
+      <div class="subtabs">
+        <div class="subtab active" onclick="dtab(this,'d-status')">房间现况</div>
+        <div class="subtab" onclick="dtab(this,'d-rent')">租金到账</div>
+        <div class="subtab" onclick="dtab(this,'d-docs')">合约/财报</div>
+      </div>
+      <div class="body-pad" style="padding-top:14px">
+        <div id="d-status" class="dpane">
+          <div class="card">
+            <div class="kv"><span class="k">出租状态</span><span class="v"><span class="tag pos">出租中</span></span></div>
+            <div class="kv"><span class="k">承租人</span><span class="v">已签约（隐私保护）</span></div>
+            <div class="kv"><span class="k">租约期间</span><span class="v">2025/01 – 2026/12</span></div>
+            <div class="kv"><span class="k">月租金</span><span class="v tabular">฿ 32,000</span></div>
+            <div class="kv"><span class="k">管理方</span><span class="v">THRONE 代租代管</span></div>
+          </div>
+          <button class="btn ghost" style="margin-top:13px" onclick="go('cs')">💬 就此物业联系客服</button>
+        </div>
+        <div id="d-rent" class="dpane" style="display:none">
+          <div class="rent-hero"><div class="amt tabular">฿ 32,000</div>
+            <div class="st">✓ 2026 年 5 月租金已到账</div>
+            <div class="muted" style="font-size:11.5px;margin-top:6px">入账日 2026/06/03 · 约 ¥21,000 · 赠 2,100 积分</div></div>
+          <div class="card">
+            <div class="kv"><span class="k">2026/05</span><span class="v"><span class="tag pos">已到账</span> ฿32,000</span></div>
+            <div class="kv"><span class="k">2026/04</span><span class="v"><span class="tag pos">已到账</span> ฿32,000</span></div>
+            <div class="kv"><span class="k">2026/03</span><span class="v"><span class="tag pos">已到账</span> ฿32,000</span></div>
+          </div>
+          <div class="muted" style="font-size:11px;text-align:center;margin-top:11px">金额以结构化数据呈现，不经机器翻译</div>
+        </div>
+        <div id="d-docs" class="dpane" style="display:none">
+          <div class="doc" onclick="alert('原型：打开 PDF 查看器（受权限保护）')"><div class="fico">PDF</div>
+            <div class="dinfo"><div class="dn">租赁合约 Tenancy Agreement</div><div class="dm">2.4 MB · 2025/01 签署</div></div><div class="dl">⤓</div></div>
+          <div class="doc" onclick="alert('原型：打开 PDF 查看器（受权限保护）')"><div class="fico">PDF</div>
+            <div class="dinfo"><div class="dn">委托管理合约</div><div class="dm">1.8 MB · 有效中</div></div><div class="dl">⤓</div></div>
+          <div class="doc" onclick="alert('原型：打开 PDF 查看器（受权限保护）')"><div class="fico">PDF</div>
+            <div class="dinfo"><div class="dn">代管合约</div><div class="dm">1.2 MB · 有效中</div></div><div class="dl">⤓</div></div>
+          <div class="doc" onclick="alert('原型：打开 PDF 查看器（受权限保护）')"><div class="fico">PDF</div>
+            <div class="dinfo"><div class="dn">2025 年度财务报表</div><div class="dm">收支明细 · 含税费</div></div><div class="dl">⤓</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== POINTS ===== -->
+    <div class="screen" id="points" data-title="积分中心">
+      <div class="pts-hero">
+        <div class="lab">当前可用积分</div>
+        <div class="big tabular">28,600</div>
+        <div class="tier">◆ ROYAL MEMBER · 每消费 ¥100 享 1 分</div>
+        <div class="ptrack"><div class="pfill"></div></div>
+        <div class="pinfo"><span>距 IMPERIAL 尊爵会员</span><span>28,600 / 45,000</span></div>
+      </div>
+      <div class="body-pad" style="padding-top:14px">
+        <div class="sec-title">泰国在地权益兑换</div>
+        <div class="reward" onclick="redeem('机场接送')">
+          <div class="rimg" style="background-image:url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=300&q=70')"></div>
+          <div class="ri"><h4>机场免费接送</h4><div class="d">素万那普/廊曼机场 ⇄ 市区 · 含司机</div>
+          <div class="foot"><span class="cost tabular">3,000 <small>分</small></span><div class="spacer"></div><button class="btn solid sm">兑换</button></div></div>
+        </div>
+        <div class="reward" onclick="redeem('五星住宿')">
+          <div class="rimg" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=300&q=70')"></div>
+          <div class="ri"><h4>五星酒店住宿一晚</h4><div class="d">曼谷 The Reserve 集团 · 含早餐</div>
+          <div class="foot"><span class="cost tabular">12,000 <small>分</small></span><div class="spacer"></div><button class="btn solid sm">兑换</button></div></div>
+        </div>
+        <div class="reward" onclick="redeem('全身按摩')">
+          <div class="rimg" style="background-image:url('https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&w=300&q=70')"></div>
+          <div class="ri"><h4>泰式全身按摩 90 分钟</h4><div class="d">市区指定 SPA 会馆 · 会员时段</div>
+          <div class="foot"><span class="cost tabular">2,500 <small>分</small></span><div class="spacer"></div><button class="btn solid sm">兑换</button></div></div>
+        </div>
+        <div class="muted" style="font-size:11px;text-align:center;margin-top:6px">权益由 THRONE 自营 + 精选合作商家提供 · 专属管家安排履约</div>
+      </div>
+    </div>
+
+    <!-- ===== CS ===== -->
+    <div class="screen" id="cs" data-title="专属客服">
+      <div class="trans-bar">🌐 实时翻译已开启　你说中文 · 客服收到泰文<div class="sw"></div></div>
+      <div class="chat">
+        <div class="msg in"><div class="bubble">สวัสดีค่ะ คุณเฉิน 😊 มีอะไรให้ช่วยไหมคะ</div>
+          <div class="orig"><span class="lbl">译：</span>陈先生你好 😊 有什么可以帮您？</div>
+          <div class="time">09:32 · 管家 Nan（泰文原文）</div></div>
+        <div class="msg out"><div class="bubble">我下周到曼谷，想用积分预约机场接送和按摩</div>
+          <div class="orig"><span class="lbl">客服端显示：</span>สัปดาห์หน้าจะไปกรุงเทพฯ…</div>
+          <div class="time">09:33 · 你（中文）</div></div>
+        <div class="msg in"><div class="bubble">ได้เลยค่ะ 🚗 รถรับ 3,000 แต้ม นวด 2,500 แต้ม จองเลยไหมคะ</div>
+          <div class="orig"><span class="lbl">译：</span>没问题 🚗 接送 3,000 分、按摩 2,500 分，现在帮您预约吗？</div>
+          <div class="time">09:34 · 管家 Nan</div></div>
+        <div class="chan-note">— 同时整合 微信 / WhatsApp / LINE 至同一收件箱 —</div>
+      </div>
+      <div class="chat-input"><div class="ti">发送消息…（简体 / 繁体 / English）</div><div class="send">➤</div></div>
+    </div>
+
+    <!-- ===== PROFILE ===== -->
+    <div class="screen" id="me" data-title="我的">
+      <div class="prof-top">
+        <div class="av">陈</div><div class="nm">陈先生 Mr. Chen</div>
+        <div class="verified">🛡️ 已完成实名认证 · ◆ ROYAL MEMBER</div>
+      </div>
+      <div class="body-pad" style="padding-top:14px">
+        <div>
+          <div class="pitem"><span class="ico">👤</span><span class="t">个人资料与证件</span><span class="ar">›</span></div>
+          <div class="pitem" onclick="go('props')"><span class="ico">🏠</span><span class="t">我的委托物业</span><span class="ar">›</span></div>
+          <div class="pitem" onclick="go('points')"><span class="ico">🎁</span><span class="t">我的积分与兑换记录</span><span class="ar">›</span></div>
+          <div class="pitem"><span class="ico">📄</span><span class="t">我的合约与财报</span><span class="ar">›</span></div>
+        </div>
+        <div style="margin-top:13px">
+          <div class="pitem" onclick="go('cs')"><span class="ico">💬</span><span class="t">专属管家客服</span><span class="ar">›</span></div>
+          <div class="pitem"><span class="ico">🌐</span><span class="t">语言　<span class="muted" style="font-size:12px">简体中文</span></span><span class="ar">›</span></div>
+          <div class="pitem"><span class="ico">🛡️</span><span class="t">账户安全与隐私</span><span class="ar">›</span></div>
+        </div>
+        <div style="margin-top:13px">
+          <div class="pitem" onclick="go('auth')"><span class="ico">↩︎</span><span class="t">退出登录</span><span class="ar">›</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tabbar" id="tabbar">
+    <div class="tb active" data-s="home" onclick="go('home')"><span class="i">🏛️</span>首页</div>
+    <div class="tb" data-s="props" onclick="go('props')"><span class="i">🏠</span>物业</div>
+    <div class="tb" data-s="points" onclick="go('points')"><span class="i">🎁</span>积分</div>
+    <div class="tb" data-s="me" onclick="go('me')"><span class="i">◆</span>我的</div>
+  </div>
+</div>
+
+<div class="legend">
+  微信小程序版（中港主入口）：<b>微信授权登录＋实名</b> → 底部 Tab <b>首页/物业/积分/我的</b> →
+  物业看 <b>租金到账・合约/财报（含代管合约）</b> → 积分兑换 <b>泰国在地权益</b> → 客服 <b>中↔泰实时翻译</b>。
+  <div class="pills">
+    <span class="pill">📱 微信原生导览列 + 胶囊按钮</span>
+    <span class="pill">🈶 简体中文界面</span>
+    <span class="pill">🛡️ 绑定式查询</span>
+    <span class="pill">🎁 自营＋精选合作 履约</span>
+    <span class="pill">🔗 与海外 App 共用后端</span>
+  </div>
+</div>
+
+<script>
+const tabScreens=['home','props','points','me'];
+const sub={detail:'props', cs:'home'};
+const backFor={detail:'props', cs:'home', points:'home'};
+let backTo='home';
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id); el.classList.add('active');
+  document.querySelectorAll('.screen-wrap .screen').forEach(s=>s.scrollTop=0);
+  // nav title
+  document.getElementById('navtitle').textContent = el.dataset.title || '碩盛国际';
+  // back button: show on sub pages
+  const isSub = !tabScreens.includes(id) && id!=='auth';
+  document.getElementById('navback').style.display = isSub ? 'block' : 'none';
+  backTo = backFor[id] || 'home';
+  // tabbar
+  const bar=document.getElementById('tabbar');
+  bar.style.display = (id==='auth') ? 'none' : 'flex';
+  const hl = tabScreens.includes(id) ? id : (sub[id]||'');
+  document.querySelectorAll('.tabbar .tb').forEach(t=>t.classList.toggle('active', t.dataset.s===hl));
+}
+function login(){ go('home'); }
+function openDetail(){ go('detail'); }
+function redeem(n){ alert('原型：确认以积分兑换「'+n+'」，由专属管家安排履约。'); }
+function dtab(el,pane){
+  el.parentElement.querySelectorAll('.subtab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('#detail .dpane').forEach(p=>p.style.display='none');
+  document.getElementById(pane).style.display='block';
+}
+document.getElementById('tabbar').style.display='none';
+document.getElementById('navback').style.display='none';
+</script>
+</body>
+</html>
