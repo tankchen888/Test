@@ -3,316 +3,530 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THRONE PROPERTY ｜ ERP 營運儀表板</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- ============ SEO: Primary ============ -->
+<title>碩盛國際不動產 THRONE PROPERTY｜海外房地產・資產管理・移民簽證｜高資產家族的全球資產管家</title>
+<meta name="description" content="碩盛國際不動產 THRONE PROPERTY 為高資產族群提供海外房地產投資、資產管理、代租代管、資產規劃與移民簽證一站式服務。以王者級視野，為您佈局全球資產配置。">
+<meta name="keywords" content="海外房地產,海外置產,資產管理,代租代管,資產規劃,移民簽證,投資移民,高資產,家族辦公室,財富管理,碩盛國際不動產,THRONE PROPERTY,全球資產配置">
+<meta name="author" content="碩盛國際不動產 THRONE PROPERTY">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0a1730">
+<meta name="format-detection" content="telephone=yes">
+<link rel="canonical" href="https://tankchen888.github.io/Test/">
+
+<!-- ============ SEO: Open Graph ============ -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="碩盛國際不動產 THRONE PROPERTY">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:title" content="碩盛國際不動產 THRONE PROPERTY｜高資產家族的全球資產管家">
+<meta property="og:description" content="海外房地產・資產管理・代租代管・資產規劃・移民簽證。以王者級視野，為高資產族群佈局全球資產配置。">
+<meta property="og:url" content="https://tankchen888.github.io/Test/">
+<meta property="og:image" content="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&h=630&q=80">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="THRONE PROPERTY 海外房地產與全球資產管理">
+
+<!-- ============ SEO: Twitter ============ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="碩盛國際不動產 THRONE PROPERTY｜高資產家族的全球資產管家">
+<meta name="twitter:description" content="海外房地產・資產管理・代租代管・資產規劃・移民簽證。為高資產族群佈局全球資產配置。">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&h=630&q=80">
+
+<!-- ============ SEO: Structured Data (JSON-LD) ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "name": "碩盛國際不動產 THRONE PROPERTY",
+  "alternateName": "THRONE PROPERTY",
+  "url": "https://tankchen888.github.io/Test/",
+  "logo": "https://tankchen888.github.io/Test/logo-v.png",
+  "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=80",
+  "description": "為高資產族群提供海外房地產投資、資產管理、代租代管、資產規劃與移民簽證的一站式全球資產服務。",
+  "priceRange": "$$$$",
+  "areaServed": ["Taiwan","United States","United Kingdom","Japan","Australia","Canada","Singapore","Portugal"],
+  "knowsAbout": ["海外房地產","資產管理","代租代管","資產規劃","移民簽證","全球資產配置","家族財富傳承"],
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "TW",
+    "addressLocality": "台北市",
+    "addressRegion": "信義區"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+886-2-0000-0000",
+    "contactType": "customer service",
+    "areaServed": "TW",
+    "availableLanguage": ["zh-Hant","en"]
+  },
+  "makesOffer": [
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"海外房地產投資"}},
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"資產管理"}},
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"代租代管"}},
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"資產規劃"}},
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"移民簽證顧問"}}
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --gold:#A67C52; --gold-d:#8a6440; --gold-l:#c9a47e;
-    --ink:#2c2620; --muted:#8c8175; --line:#e7ddd0;
-    --bg:#faf7f2; --panel:#ffffff; --cream:#f4ece1;
-    --pos:#5b7c5a; --neg:#b06a4f;
-    --serif:"Songti TC","Noto Serif TC",Georgia,"Times New Roman",serif;
-    --sans:-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1240px;margin:0 auto;padding:0 24px 64px}
+:root{
+  --navy:#0a1730; --navy-2:#0c1d3d; --navy-3:#12274d; --navy-deep:#060f22;
+  --gold:#c8a35a; --gold-l:#e7cf9b; --gold-d:#a07d3a; --gold-soft:#d9be83;
+  --cream:#f5efe2; --paper:#faf6ee; --ink:#1a2438; --muted:#8b93a5;
+  --line:rgba(200,163,90,.22);
+  --serif-en:"Cormorant Garamond",Georgia,serif;
+  --serif-tc:"Noto Serif TC",serif;
+  --sans:"Noto Sans TC",-apple-system,"PingFang TC",sans-serif;
+  --maxw:1200px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.gold{color:var(--gold)}
+h1,h2,h3{font-family:var(--serif-tc);font-weight:600;line-height:1.25}
+.eyebrow{font-family:var(--serif-en);font-size:14px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:600}
+.divider{width:54px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:0 auto}
 
-  /* header */
-  header{background:linear-gradient(180deg,#fff 0%,var(--cream) 100%);border-bottom:2px solid var(--gold);padding:30px 0 22px}
-  .brandrow{display:flex;align-items:center;gap:18px;justify-content:center;text-align:center;flex-direction:column}
-  .logo{width:60px;height:60px}
-  .brand-cn{font-family:var(--serif);font-size:22px;letter-spacing:.32em;color:var(--gold-d);padding-left:.32em}
-  .brand-en{font-family:var(--serif);font-size:30px;letter-spacing:.42em;color:var(--gold);font-weight:600;padding-left:.42em}
-  .brand-sub{font-size:11px;letter-spacing:.5em;color:var(--muted);padding-left:.5em}
-  .dash-title{text-align:center;margin-top:18px;font-family:var(--serif);font-size:18px;color:var(--ink);letter-spacing:.1em}
-  .meta{text-align:center;font-size:12px;color:var(--muted);margin-top:6px}
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--sans);font-size:14px;letter-spacing:.14em;
+  padding:15px 34px;border:1px solid var(--gold);color:var(--gold);background:transparent;cursor:pointer;
+  transition:.4s cubic-bezier(.2,.7,.2,1);position:relative;overflow:hidden}
+.btn::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,var(--gold),var(--gold-l));
+  transform:translateX(-101%);transition:.45s cubic-bezier(.2,.7,.2,1);z-index:-1}
+.btn:hover{color:var(--navy)}
+.btn:hover::before{transform:translateX(0)}
+.btn.solid{background:linear-gradient(120deg,var(--gold-d),var(--gold));color:var(--navy);border-color:transparent;font-weight:500}
+.btn.solid::before{background:linear-gradient(120deg,var(--gold),var(--gold-l))}
 
-  /* nav */
-  nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:24px 0 28px}
-  .tab{font-family:var(--serif);font-size:15px;letter-spacing:.12em;padding:9px 22px;border:1px solid var(--line);background:var(--panel);
-       color:var(--muted);cursor:pointer;border-radius:2px;transition:.18s}
-  .tab:hover{color:var(--gold-d);border-color:var(--gold-l)}
-  .tab.active{background:var(--gold);color:#fff;border-color:var(--gold);box-shadow:0 4px 14px rgba(166,124,82,.28)}
+/* ---------- nav ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:100;transition:.45s;padding:22px 0}
+header.scrolled{background:rgba(8,17,36,.92);backdrop-filter:blur(14px);padding:13px 0;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.nav{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:13px}
+.brand .brand-logo{height:46px;width:auto;transition:height .45s}
+header.scrolled .brand .brand-logo{height:38px}
+.menu{display:flex;gap:38px;align-items:center}
+.menu a{color:#dde3ee;font-size:14.5px;letter-spacing:.08em;position:relative;padding:4px 0}
+.menu a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:.35s}
+.menu a:hover{color:var(--gold-l)}
+.menu a:hover::after{width:100%}
+.menu .btn{padding:11px 26px;font-size:13px}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:0}
+.burger span{width:26px;height:2px;background:var(--gold-l);transition:.3s}
 
-  section{display:none;animation:fade .35s ease}
-  section.active{display:block}
-  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;
+  background:linear-gradient(125deg,var(--navy-deep) 0%,var(--navy) 45%,var(--navy-3) 100%);overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 72% 30%,rgba(200,163,90,.16),transparent 55%),
+            linear-gradient(0deg,rgba(6,15,34,.85),rgba(6,15,34,.25));z-index:2}
+.hero-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.32;z-index:1;
+  background-image:url("https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1920&q=80");
+  filter:saturate(.85) contrast(1.05)}
+/* gold filigree lines */
+.hero-orn{position:absolute;z-index:2;border:1px solid var(--line)}
+.hero-orn.a{top:14%;right:8%;width:240px;height:240px;border-radius:50%;opacity:.5}
+.hero-orn.b{top:18%;right:11%;width:170px;height:170px;border-radius:50%;opacity:.35}
+.hero-content{position:relative;z-index:3;width:100%}
+.hero .tagline{color:var(--gold);font-family:var(--serif-en);letter-spacing:.5em;font-size:14px;text-transform:uppercase;
+  margin-bottom:26px;opacity:0;transform:translateY(24px);animation:rise .9s .15s forwards}
+.hero h1{font-size:clamp(40px,6vw,82px);color:#fff;font-weight:600;letter-spacing:.02em;max-width:16ch}
+.hero h1 .ln{display:block;opacity:0;transform:translateY(30px)}
+.hero h1 .ln:nth-child(1){animation:rise 1s .3s forwards}
+.hero h1 .ln:nth-child(2){animation:rise 1s .5s forwards}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--gold-l),var(--gold),var(--gold-d));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.sub{color:#c4ccdb;font-size:clamp(16px,1.5vw,19px);max-width:46ch;margin:30px 0 42px;font-weight:300;
+  opacity:0;transform:translateY(24px);animation:rise 1s .75s forwards}
+.hero .cta{display:flex;gap:18px;flex-wrap:wrap;opacity:0;transform:translateY(24px);animation:rise 1s .95s forwards}
+.scroll-ind{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:3;color:var(--gold-l);
+  font-size:11px;letter-spacing:.3em;text-align:center;opacity:.8}
+.scroll-ind .mouse{width:24px;height:38px;border:1px solid var(--gold);border-radius:13px;margin:0 auto 10px;position:relative}
+.scroll-ind .mouse::after{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);width:3px;height:7px;
+  background:var(--gold);border-radius:2px;animation:scroll 1.8s infinite}
+@keyframes scroll{0%{opacity:1;top:7px}70%{opacity:0;top:18px}100%{opacity:0}}
+@keyframes rise{to{opacity:1;transform:none}}
 
-  .sec-h{font-family:var(--serif);font-size:17px;color:var(--gold-d);letter-spacing:.14em;margin:30px 0 14px;
-         display:flex;align-items:center;gap:10px}
-  .sec-h::before{content:"";width:18px;height:2px;background:var(--gold)}
+/* ---------- stats bar ---------- */
+.stats{background:var(--navy);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stats .grid{display:grid;grid-template-columns:repeat(4,1fr);text-align:center}
+.stat{padding:46px 16px;border-right:1px solid rgba(255,255,255,.06)}
+.stat:last-child{border-right:0}
+.stat .num{font-family:var(--serif-en);font-size:clamp(38px,4vw,54px);color:var(--gold-l);font-weight:600;line-height:1}
+.stat .num small{font-size:.5em;color:var(--gold)}
+.stat .lab{color:#aeb6c6;font-size:13.5px;letter-spacing:.12em;margin-top:12px}
 
-  /* kpi cards */
-  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
-  .kpi{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:3px;padding:18px 18px 16px}
-  .kpi .lab{font-size:12px;color:var(--muted);letter-spacing:.08em}
-  .kpi .val{font-family:var(--serif);font-size:27px;color:var(--ink);margin-top:7px;line-height:1.1;font-weight:600}
-  .kpi .val small{font-size:14px;color:var(--gold-d);font-weight:400;margin-left:2px}
-  .kpi .sub{font-size:11px;color:var(--muted);margin-top:5px}
-  .kpi .val.pos{color:var(--pos)} .kpi .val.neg{color:var(--neg)}
+/* ---------- section base ---------- */
+section.block{padding:clamp(72px,10vw,128px) 0}
+.sec-head{text-align:center;max-width:680px;margin:0 auto 64px}
+.sec-head h2{font-size:clamp(30px,4vw,46px);color:var(--ink);margin:18px 0}
+.sec-head p{color:#5c6678;font-size:16.5px}
+.reveal{opacity:0;transform:translateY(40px);transition:.9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
 
-  /* chart grid */
-  .grid{display:grid;gap:16px;margin-top:16px}
-  .g2{grid-template-columns:repeat(2,1fr)}
-  .g3{grid-template-columns:repeat(3,1fr)}
-  @media(max-width:880px){.g2,.g3{grid-template-columns:1fr}}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:18px 18px 14px}
-  .card h3{font-family:var(--serif);font-size:14px;color:var(--ink);letter-spacing:.08em;margin-bottom:14px;font-weight:600}
-  .card h3 span{font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0}
+/* ---------- services ---------- */
+.services{background:linear-gradient(180deg,#fff,var(--paper))}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.svc{background:#fff;padding:48px 38px;transition:.45s;position:relative;overflow:hidden}
+.svc::before{content:"";position:absolute;top:0;left:0;width:100%;height:3px;
+  background:linear-gradient(90deg,var(--gold-d),var(--gold-l));transform:scaleX(0);transform-origin:left;transition:.45s}
+.svc:hover{background:var(--navy);transform:translateY(-4px)}
+.svc:hover::before{transform:scaleX(1)}
+.svc .ico{width:52px;height:52px;color:var(--gold);margin-bottom:24px;transition:.45s}
+.svc .no{font-family:var(--serif-en);font-size:13px;letter-spacing:.3em;color:var(--gold-d);margin-bottom:10px}
+.svc h3{font-size:23px;color:var(--ink);transition:.45s;margin-bottom:14px}
+.svc p{color:#67718a;font-size:14.5px;transition:.45s}
+.svc:hover h3{color:var(--gold-l)}
+.svc:hover p{color:#b9c1d2}
+.svc:hover .no{color:var(--gold)}
 
-  /* bars */
-  .bar{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:12.5px}
-  .bar .nm{width:118px;flex:0 0 118px;text-align:right;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .bar .track{flex:1;background:var(--cream);border-radius:2px;height:18px;position:relative;overflow:hidden}
-  .bar .fill{height:100%;background:linear-gradient(90deg,var(--gold-l),var(--gold));border-radius:2px;min-width:2px;transition:width .9s cubic-bezier(.2,.7,.2,1)}
-  .bar .vl{flex:0 0 86px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+/* ---------- about (split) ---------- */
+.about{background:var(--navy);color:#dfe4ee;position:relative;overflow:hidden}
+.about::before{content:"";position:absolute;top:-120px;right:-120px;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,163,90,.12),transparent 70%)}
+.about .split{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.about .eyebrow{margin-bottom:14px}
+.about h2{font-size:clamp(28px,3.6vw,42px);color:#fff;margin-bottom:26px}
+.about p{color:#aeb6c6;margin-bottom:18px;font-weight:300;font-size:16px}
+.about .pillars{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:36px}
+.pillar{border-left:2px solid var(--gold);padding-left:18px}
+.pillar b{font-family:var(--serif-tc);color:var(--gold-l);font-size:17px;display:block;margin-bottom:4px}
+.pillar span{color:#9aa3b5;font-size:13.5px}
+.about .visual{position:relative;aspect-ratio:4/5;border:1px solid var(--line);overflow:hidden}
+.about .visual img{width:100%;height:100%;object-fit:cover;filter:saturate(.8) brightness(.85)}
+.about .visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(10,23,48,.7))}
+.about .badge{position:absolute;bottom:26px;left:26px;z-index:2}
+.about .badge b{font-family:var(--serif-en);font-size:40px;color:var(--gold-l);display:block;line-height:1}
+.about .badge span{color:#cfd5e1;font-size:13px;letter-spacing:.1em}
 
-  svg{display:block;width:100%;height:auto;overflow:visible}
-  .legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:12px;font-size:12px;color:var(--muted)}
-  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
+/* ---------- process ---------- */
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;counter-reset:step}
+.proc{text-align:center;position:relative}
+.proc .ring{width:84px;height:84px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 22px;position:relative;transition:.4s}
+.proc .ring::before{counter-increment:step;content:counter(step,decimal-leading-zero);
+  font-family:var(--serif-en);font-size:26px;color:var(--gold);font-weight:600}
+.proc:hover .ring{background:var(--gold);box-shadow:0 12px 30px rgba(200,163,90,.35)}
+.proc:hover .ring::before{color:var(--navy)}
+.proc h3{font-size:19px;margin-bottom:8px;color:var(--ink)}
+.proc p{color:#67718a;font-size:14px}
 
-  footer{text-align:center;color:var(--muted);font-size:11px;margin-top:48px;padding-top:18px;border-top:1px solid var(--line)}
-  .note{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6}
+/* ---------- markets ---------- */
+.markets{background:linear-gradient(180deg,var(--paper),#fff)}
+.mkt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.mkt{position:relative;aspect-ratio:3/4;overflow:hidden;border:1px solid var(--line)}
+.mkt img{width:100%;height:100%;object-fit:cover;transition:.6s;filter:saturate(.85)}
+.mkt:hover img{transform:scale(1.08)}
+.mkt::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(8,17,36,.82))}
+.mkt .cap{position:absolute;bottom:0;left:0;right:0;padding:22px;z-index:2}
+.mkt .cap b{font-family:var(--serif-tc);color:#fff;font-size:20px;display:block}
+.mkt .cap span{color:var(--gold-l);font-size:12px;letter-spacing:.2em;font-family:var(--serif-en)}
+
+/* ---------- quote ---------- */
+.quote{background:var(--navy-deep);text-align:center;color:#fff;position:relative}
+.quote .mark{font-family:var(--serif-en);font-size:120px;color:var(--gold);opacity:.25;line-height:.6;height:54px}
+.quote blockquote{font-family:var(--serif-tc);font-size:clamp(22px,3vw,34px);font-weight:500;max-width:20ch;margin:0 auto 28px;line-height:1.5}
+.quote cite{color:var(--gold-l);font-style:normal;letter-spacing:.2em;font-size:14px}
+
+/* ---------- contact ---------- */
+.contact{background:linear-gradient(125deg,var(--navy),var(--navy-3));color:#fff;position:relative;overflow:hidden}
+.contact::before{content:"";position:absolute;bottom:-150px;left:-100px;width:480px;height:480px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,163,90,.1),transparent 70%)}
+.contact .split{display:grid;grid-template-columns:1fr 1fr;gap:64px;position:relative;z-index:2}
+.contact h2{font-size:clamp(30px,4vw,44px);color:#fff;margin:18px 0 22px}
+.contact .lead{color:#aeb6c6;font-weight:300;margin-bottom:34px;font-size:16.5px}
+.cinfo{display:flex;gap:16px;align-items:flex-start;margin-bottom:24px}
+.cinfo .ic{width:42px;height:42px;flex:0 0 42px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold)}
+.cinfo b{display:block;color:#fff;font-size:15px;font-family:var(--serif-tc)}
+.cinfo span{color:#9aa3b5;font-size:14px}
+form{background:rgba(255,255,255,.04);border:1px solid var(--line);padding:40px;backdrop-filter:blur(6px)}
+.field{margin-bottom:20px}
+.field label{display:block;font-size:13px;letter-spacing:.1em;color:var(--gold-l);margin-bottom:8px}
+.field input,.field select,.field textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(200,163,90,.25);
+  color:#fff;padding:13px 15px;font-family:var(--sans);font-size:15px;transition:.3s}
+.field input:focus,.field select,.field textarea:focus{outline:none;border-color:var(--gold)}
+.field select option{background:var(--navy)}
+.field textarea{resize:vertical;min-height:96px}
+form .btn{width:100%;justify-content:center;margin-top:6px}
+.form-note{font-size:12px;color:var(--muted);margin-top:14px;text-align:center}
+
+/* ---------- footer ---------- */
+footer{background:var(--navy-deep);color:#aeb6c6;padding:72px 0 30px;border-top:1px solid var(--line)}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:50px}
+.foot-brand .foot-logo{width:150px;height:auto;margin-bottom:22px}
+.foot-brand p{font-size:14px;max-width:34ch;font-weight:300}
+.foot-col h4{font-family:var(--serif-tc);color:var(--gold-l);font-size:15px;margin-bottom:20px;letter-spacing:.08em}
+.foot-col a,.foot-col p{display:block;color:#9aa3b5;font-size:14px;margin-bottom:11px;transition:.25s}
+.foot-col a:hover{color:var(--gold-l);padding-left:4px}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:26px;display:flex;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;font-size:12.5px;color:#6f7689}
+.foot-bottom a{color:#6f7689}.foot-bottom a:hover{color:var(--gold-l)}
+
+/* ---------- responsive ---------- */
+@media(max-width:900px){
+  .menu{position:fixed;inset:0 0 0 auto;width:74%;max-width:340px;background:rgba(8,17,36,.98);backdrop-filter:blur(16px);
+    flex-direction:column;justify-content:center;gap:30px;transform:translateX(100%);transition:.45s;padding:40px}
+  .menu.open{transform:none}
+  .burger{display:flex;z-index:101}
+  .stats .grid{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:0}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .about .split,.contact .split{grid-template-columns:1fr;gap:44px}
+  .about .pillars{grid-template-columns:1fr 1fr}
+  .proc-grid{grid-template-columns:1fr 1fr;gap:40px 20px}
+  .mkt-grid{grid-template-columns:1fr 1fr}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:34px}
+}
+@media(max-width:560px){
+  .svc-grid,.mkt-grid,.stats .grid{grid-template-columns:1fr}
+  .stat{border-right:0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .foot-grid{grid-template-columns:1fr}
+  .hero .cta{flex-direction:column}.hero .cta .btn{width:100%;justify-content:center}
+}
 </style>
 </head>
 <body>
-<header>
-  <div class="brandrow">
-    <svg class="logo" viewBox="0 0 100 100" aria-label="THRONE">
-      <g fill="#A67C52">
-        <rect x="14" y="6" width="72" height="5"/>
-        <rect x="19" y="14" width="62" height="4"/>
-        <rect x="24" y="21" width="52" height="4"/>
-        <rect x="40" y="27" width="6" height="60"/>
-        <rect x="48" y="27" width="6" height="60"/>
-        <rect x="56" y="27" width="6" height="60"/>
-      </g>
-    </svg>
-    <div>
-      <div class="brand-cn">碩 盛 國 際 不 動 產</div>
-      <div class="brand-en">THRONE</div>
-      <div class="brand-sub">PROPERTY</div>
-    </div>
+
+<!-- ============ NAV ============ -->
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="#top" class="brand" aria-label="碩盛國際不動產 THRONE PROPERTY 首頁">
+      <img src="logo-h.png" class="brand-logo" alt="碩盛國際不動產 THRONE PROPERTY" width="190" height="51">
+    </a>
+    <nav class="menu" id="menu" aria-label="主選單">
+      <a href="#services">服務領域</a>
+      <a href="#about">關於碩盛</a>
+      <a href="#process">服務流程</a>
+      <a href="#markets">全球佈局</a>
+      <a href="#contact" class="btn">預約諮詢</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="開啟選單" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
-  <div class="dash-title">ERP 營運儀表板 · 製造 / 庫存 / 銷售 / 財會</div>
-  <div class="meta" id="meta"></div>
 </header>
 
-<div class="wrap">
-  <nav id="nav"></nav>
-  <section id="overview" class="active"></section>
-  <section id="sales"></section>
-  <section id="finance"></section>
-  <section id="inventory"></section>
-  <section id="manufacturing"></section>
-  <footer>
-    本儀表板由 ERP DEMO 範例資料庫彙整 · 採用 THRONE PROPERTY 品牌識別 ·
-    所有金額單位為新台幣 (NTD)
-    <div class="note">註：本資料為練習用範例資料庫（非碩盛國際不動產實際營運數據）。日期已線性換算至 2024–2026。</div>
-  </footer>
-</div>
+<!-- ============ HERO ============ -->
+<main id="top">
+<section class="hero" aria-label="主視覺">
+  <div class="hero-img" role="img" aria-label="夜幕下的國際都會天際線與精品豪宅"></div>
+  <span class="hero-orn a" aria-hidden="true"></span>
+  <span class="hero-orn b" aria-hidden="true"></span>
+  <div class="wrap hero-content">
+    <p class="tagline">Global Wealth · Curated for the Few</p>
+    <h1><span class="ln">為高資產家族</span><span class="ln">佈局<em>全球資產的王者視野</em></span></h1>
+    <p class="sub">從海外房地產到資產傳承，碩盛國際不動產以精品級服務與全球視野，為您打造跨越世代的財富版圖。</p>
+    <div class="cta">
+      <a href="#contact" class="btn solid">預約私人諮詢 <span aria-hidden="true">→</span></a>
+      <a href="#services" class="btn">探索服務領域</a>
+    </div>
+  </div>
+  <div class="scroll-ind" aria-hidden="true"><div class="mouse"></div>SCROLL</div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats" aria-label="關鍵數據">
+  <div class="wrap"><div class="grid">
+    <div class="stat"><div class="num" data-to="320">0<small>億+</small></div><div class="lab">管理資產規模 (NTD)</div></div>
+    <div class="stat"><div class="num" data-to="1200">0<small>+</small></div><div class="lab">服務高資產家族</div></div>
+    <div class="stat"><div class="num" data-to="18">0</div><div class="lab">跨國服務據點</div></div>
+    <div class="stat"><div class="num" data-to="20">0<small>年</small></div><div class="lab">深耕海外不動產</div></div>
+  </div></div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="block services" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Our Expertise</p>
+      <h2>五大核心服務領域</h2>
+      <p>一站式整合海外置產、資產營運與身分規劃，為高資產族群提供從佈局到傳承的完整解決方案。</p>
+      <div class="divider"></div>
+    </div>
+    <div class="svc-grid reveal">
+      <article class="svc">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9v11h14V9"/><path d="M9.5 20v-6h5v6"/></svg>
+        <div class="no">01</div><h3>海外房地產</h3>
+        <p>橫跨美、英、日、澳、葡萄牙等核心市場，精選具增值潛力與穩定收益的頂級物件，自實地考察到交割全程把關。</p>
+      </article>
+      <article class="svc">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+        <div class="no">02</div><h3>資產管理</h3>
+        <p>以家族辦公室思維統籌全球資產配置，結合稅務、法律與金融專業，追求風險可控下的長期穩健增值。</p>
+      </article>
+      <article class="svc">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-5h6v5"/><path d="M9 11h.01M15 11h.01"/></svg>
+        <div class="no">03</div><h3>代租代管</h3>
+        <p>跨時區的在地團隊代為招租、收租與物業維護，讓您身在台灣，海外資產依然運轉如常、收益透明可查。</p>
+      </article>
+      <article class="svc">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <div class="no">04</div><h3>資產規劃</h3>
+        <p>量身打造財富傳承與節稅架構，運用信託、控股與跨境工具，確保資產跨越世代安全交棒。</p>
+      </article>
+      <article class="svc">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"/></svg>
+        <div class="no">05</div><h3>移民簽證</h3>
+        <p>整合投資移民、置產取得身分與居留簽證方案，結合合作律師事務所，為家族開啟第二身分與全球通行的自由。</p>
+      </article>
+      <article class="svc" style="display:flex;flex-direction:column;justify-content:center;background:linear-gradient(135deg,var(--navy),var(--navy-3))">
+        <h3 style="color:var(--gold-l)">尊榮專屬規劃</h3>
+        <p style="color:#b9c1d2">每位客戶皆配置專屬顧問，提供保密、客製、跨領域的一對一服務。</p>
+        <a href="#contact" class="btn" style="margin-top:22px;align-self:flex-start">立即洽詢 →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="block about" id="about">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">About THRONE</p>
+        <h2>以王者之名，<br>守護家族財富的傳承</h2>
+        <p>THRONE 意為王座。我們深信，真正的財富不僅是資產的累積，更是跨越世代的安心與自由。碩盛國際不動產集結海外不動產、資產管理與移民法務的頂尖專業，為高資產族群提供如精品般細緻、如管家般可靠的全方位服務。</p>
+        <p>從紐約曼哈頓到東京銀座，從倫敦梅費爾到里斯本黃金海岸——我們以全球視野與在地深耕，協助您在世界舞台上從容佈局。</p>
+        <div class="pillars">
+          <div class="pillar"><b>絕對保密</b><span>家族辦公室等級的隱私保護</span></div>
+          <div class="pillar"><b>全球網絡</b><span>18 處跨國據點與在地團隊</span></div>
+          <div class="pillar"><b>專屬顧問</b><span>一對一客製化資產策略</span></div>
+          <div class="pillar"><b>跨域整合</b><span>不動產・稅務・法律一站到位</span></div>
+        </div>
+      </div>
+      <div class="visual reveal">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80" alt="碩盛國際不動產精選的海外頂級豪宅建築外觀" loading="lazy">
+        <div class="badge"><b>20+</b><span>YEARS OF EXCELLENCE</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="block" id="process">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">How We Serve</p>
+      <h2>專屬服務流程</h2>
+      <p>四個步驟，從理解您的願景到實現跨國資產的長期管理。</p>
+      <div class="divider"></div>
+    </div>
+    <div class="proc-grid reveal">
+      <div class="proc"><div class="ring"></div><h3>私人諮詢</h3><p>深入了解您的資產現況、風險偏好與家族目標。</p></div>
+      <div class="proc"><div class="ring"></div><h3>策略規劃</h3><p>量身打造跨境置產、稅務與身分整合方案。</p></div>
+      <div class="proc"><div class="ring"></div><h3>執行交割</h3><p>全程陪同實地考察、議價、法務與交割流程。</p></div>
+      <div class="proc"><div class="ring"></div><h3>長期管理</h3><p>持續代租代管、績效追蹤與資產再配置。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARKETS ============ -->
+<section class="block markets" id="markets">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Global Footprint</p>
+      <h2>世界級資產，全球佈局</h2>
+      <p>於全球高端不動產核心市場，為您掌握增值與收益的關鍵座標。</p>
+      <div class="divider"></div>
+    </div>
+    <div class="mkt-grid reveal">
+      <div class="mkt"><img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=600&q=80" alt="美國紐約曼哈頓房地產市場" loading="lazy"><div class="cap"><span>UNITED STATES</span><b>紐約 New York</b></div></div>
+      <div class="mkt"><img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=600&q=80" alt="英國倫敦精品不動產市場" loading="lazy"><div class="cap"><span>UNITED KINGDOM</span><b>倫敦 London</b></div></div>
+      <div class="mkt"><img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=600&q=80" alt="日本東京海外置產市場" loading="lazy"><div class="cap"><span>JAPAN</span><b>東京 Tokyo</b></div></div>
+      <div class="mkt"><img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=600&q=80" alt="葡萄牙里斯本黃金簽證置產市場" loading="lazy"><div class="cap"><span>PORTUGAL</span><b>里斯本 Lisbon</b></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTE ============ -->
+<section class="block quote">
+  <div class="wrap">
+    <div class="mark reveal">&ldquo;</div>
+    <blockquote class="reveal">真正的尊榮，是讓資產跨越國界與世代，依然從容。</blockquote>
+    <cite class="reveal">THRONE PROPERTY · 碩盛國際不動產</cite>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="block contact" id="contact">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Private Consultation</p>
+        <h2>預約您的<br>專屬資產諮詢</h2>
+        <p class="lead">留下您的聯絡方式，專屬顧問將於一個工作日內與您聯繫，提供完全保密、量身打造的諮詢服務。</p>
+        <div class="cinfo"><div class="ic"><svg width="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L7.6 9.8a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/></svg></div><div><b>專線預約</b><span>+886 2 0000 0000</span></div></div>
+        <div class="cinfo"><div class="ic"><svg width="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></div><div><b>電子郵件</b><span>concierge@throneproperty.com</span></div></div>
+        <div class="cinfo"><div class="ic"><svg width="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><b>旗艦會所</b><span>台北市信義區（採預約制）</span></div></div>
+      </div>
+      <form class="reveal" onsubmit="return handleSubmit(event)" aria-label="預約諮詢表單">
+        <div class="field"><label for="f-name">姓名 *</label><input id="f-name" name="name" required autocomplete="name" placeholder="您的稱呼"></div>
+        <div class="field"><label for="f-phone">聯絡電話 *</label><input id="f-phone" name="phone" type="tel" required autocomplete="tel" placeholder="行動電話"></div>
+        <div class="field"><label for="f-email">電子郵件</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="name@example.com"></div>
+        <div class="field"><label for="f-svc">有興趣的服務</label>
+          <select id="f-svc" name="service">
+            <option>海外房地產</option><option>資產管理</option><option>代租代管</option>
+            <option>資產規劃</option><option>移民簽證</option><option>綜合諮詢</option>
+          </select>
+        </div>
+        <div class="field"><label for="f-msg">需求說明</label><textarea id="f-msg" name="message" placeholder="簡述您的需求或偏好的市場"></textarea></div>
+        <button type="submit" class="btn solid">送出預約 →</button>
+        <p class="form-note">送出即表示您同意我們依隱私權政策保密處理您的資料。</p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="logo-v.png" class="foot-logo" alt="碩盛國際不動產 THRONE PROPERTY" width="150" height="127">
+        <p>為高資產族群提供海外房地產、資產管理與移民規劃的精品級全球服務。</p>
+      </div>
+      <div class="foot-col"><h4>服務領域</h4><a href="#services">海外房地產</a><a href="#services">資產管理</a><a href="#services">代租代管</a><a href="#services">資產規劃</a><a href="#services">移民簽證</a></div>
+      <div class="foot-col"><h4>關於我們</h4><a href="#about">品牌故事</a><a href="#process">服務流程</a><a href="#markets">全球佈局</a><a href="#contact">預約諮詢</a></div>
+      <div class="foot-col"><h4>聯絡資訊</h4><p>台北市信義區</p><p>+886 2 0000 0000</p><p>concierge@throneproperty.com</p><p>週一至週五 09:00–18:00</p></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 碩盛國際不動產 THRONE PROPERTY. All Rights Reserved.</span>
+      <span><a href="#top">隱私權政策</a> &nbsp;·&nbsp; <a href="#top">服務條款</a></span>
+    </div>
+  </div>
+</footer>
 
 <script>
-const DATA = {"sales": {"kpi": {"order_amt": 198840500, "order_cnt": 386, "order_tax": 9941978, "avg_order": 515131, "inv_amt": 188834638, "inv_cnt": 365, "cust_cnt": 42}, "order_month": [{"label": "2024-07", "value": 4258650.0}, {"label": "2024-08", "value": 5173250.0}, {"label": "2024-09", "value": 6384200.0}, {"label": "2024-10", "value": 4796500.0}, {"label": "2024-11", "value": 9037000.0}, {"label": "2024-12", "value": 6169600.0}, {"label": "2025-01", "value": 8281150.0}, {"label": "2025-02", "value": 4264000.0}, {"label": "2025-03", "value": 2762250.0}, {"label": "2025-04", "value": 11180250.0}, {"label": "2025-05", "value": 10002150.0}, {"label": "2025-06", "value": 10265400.0}, {"label": "2025-07", "value": 7379900.0}, {"label": "2025-08", "value": 11245950.0}, {"label": "2025-09", "value": 7162500.0}, {"label": "2025-10", "value": 12461600.0}, {"label": "2025-11", "value": 10445150.0}, {"label": "2025-12", "value": 15726450.0}, {"label": "2026-01", "value": 6464450.0}, {"label": "2026-02", "value": 7169950.0}, {"label": "2026-03", "value": 10034600.0}, {"label": "2026-04", "value": 7991750.0}, {"label": "2026-05", "value": 12839200.0}, {"label": "2026-06", "value": 7344600.0}], "inv_month": [{"label": "2024-07", "value": 687850.0}, {"label": "2024-08", "value": 6642830.0}, {"label": "2024-09", "value": 4078758.0}, {"label": "2024-10", "value": 4256823.0}, {"label": "2024-11", "value": 6739277.0}, {"label": "2024-12", "value": 5547500.0}, {"label": "2025-01", "value": 10264419.0}, {"label": "2025-02", "value": 5141492.0}, {"label": "2025-03", "value": 4666600.0}, {"label": "2025-04", "value": 6913561.0}, {"label": "2025-05", "value": 9031058.0}, {"label": "2025-06", "value": 6726755.0}, {"label": "2025-07", "value": 13464777.0}, {"label": "2025-08", "value": 6138108.0}, {"label": "2025-09", "value": 5923975.0}, {"label": "2025-10", "value": 10962010.0}, {"label": "2025-11", "value": 13093592.0}, {"label": "2025-12", "value": 9689284.0}, {"label": "2026-01", "value": 12006962.0}, {"label": "2026-02", "value": 2761108.0}, {"label": "2026-03", "value": 8638473.0}, {"label": "2026-04", "value": 9517050.0}, {"label": "2026-05", "value": 7740195.0}, {"label": "2026-06", "value": 18202181.0}], "top_cust": [{"label": "茂光電", "value": 22169050.0}, {"label": "勤東工業", "value": 18327600.0}, {"label": "東弘自動化", "value": 12335150.0}, {"label": "東友電機", "value": 11827350.0}, {"label": "義弘能源", "value": 10971250.0}, {"label": "台瑞系統", "value": 10111050.0}, {"label": "台電子", "value": 9459750.0}, {"label": "耀聯實業", "value": 8440500.0}, {"label": "茂義實業", "value": 7668250.0}, {"label": "東勝能源", "value": 7505050.0}], "by_channel": [{"label": "直接客戶", "value": 98091800.0}, {"label": "經銷商", "value": 79216000.0}, {"label": "海外代理", "value": 21532700.0}], "by_region": [{"label": "北部", "value": 113395300.0}, {"label": "中部", "value": 42458850.0}, {"label": "海外", "value": 27582200.0}, {"label": "南部", "value": 15404150.0}], "by_sales": [{"label": "黃業務", "value": 77899450.0}, {"label": "0015", "value": 51252200.0}, {"label": "0019", "value": 27605850.0}, {"label": "0023", "value": 24254650.0}, {"label": "許倉管", "value": 14376150.0}, {"label": "林會計", "value": 3452200.0}], "top_prod": [{"label": "智能流程-採購件", "value": 18917300.0}, {"label": "G-BRF2-825-975/R", "value": 16587750.0}, {"label": "G-12-015A 150W CE 230V 德兒 黑", "value": 13787750.0}, {"label": "CONTACT PIN", "value": 13747950.0}, {"label": "42\"直下型背光模組", "value": 11247400.0}, {"label": "微波感應器", "value": 11242500.0}, {"label": "智能流程-自製件", "value": 10964900.0}, {"label": "CABLE 白色組裝測試", "value": 9625550.0}, {"label": "SMA R/A CRIMP PLUG", "value": 8369750.0}, {"label": "1-7-1111111001", "value": 7998900.0}]}, "finance": {"kpi": {"revenue": 188834638, "ap_amt": 91503691, "ap_paid": 64952213, "ap_open": 26551478, "ap_cnt": 403, "acct_cnt": 574, "gross": 97330947}, "ap_month": [{"label": "2024-07", "value": 2017814.0}, {"label": "2024-08", "value": 2473223.0}, {"label": "2024-09", "value": 2336444.0}, {"label": "2024-10", "value": 3297852.0}, {"label": "2024-11", "value": 3866008.0}, {"label": "2024-12", "value": 2554181.0}, {"label": "2025-01", "value": 5064054.0}, {"label": "2025-02", "value": 3170916.0}, {"label": "2025-03", "value": 3858410.0}, {"label": "2025-04", "value": 5241495.0}, {"label": "2025-05", "value": 2661309.0}, {"label": "2025-06", "value": 2157349.0}, {"label": "2025-07", "value": 2072482.0}, {"label": "2025-08", "value": 4699854.0}, {"label": "2025-09", "value": 2446346.0}, {"label": "2025-10", "value": 3286677.0}, {"label": "2025-11", "value": 7177553.0}, {"label": "2025-12", "value": 3553979.0}, {"label": "2026-01", "value": 4554508.0}, {"label": "2026-02", "value": 3278231.0}, {"label": "2026-03", "value": 4723666.0}, {"label": "2026-04", "value": 3509254.0}, {"label": "2026-05", "value": 6260552.0}, {"label": "2026-06", "value": 7241534.0}], "inv_month": [{"label": "2024-07", "value": 687850.0}, {"label": "2024-08", "value": 6642830.0}, {"label": "2024-09", "value": 4078758.0}, {"label": "2024-10", "value": 4256823.0}, {"label": "2024-11", "value": 6739277.0}, {"label": "2024-12", "value": 5547500.0}, {"label": "2025-01", "value": 10264419.0}, {"label": "2025-02", "value": 5141492.0}, {"label": "2025-03", "value": 4666600.0}, {"label": "2025-04", "value": 6913561.0}, {"label": "2025-05", "value": 9031058.0}, {"label": "2025-06", "value": 6726755.0}, {"label": "2025-07", "value": 13464777.0}, {"label": "2025-08", "value": 6138108.0}, {"label": "2025-09", "value": 5923975.0}, {"label": "2025-10", "value": 10962010.0}, {"label": "2025-11", "value": 13093592.0}, {"label": "2025-12", "value": 9689284.0}, {"label": "2026-01", "value": 12006962.0}, {"label": "2026-02", "value": 2761108.0}, {"label": "2026-03", "value": 8638473.0}, {"label": "2026-04", "value": 9517050.0}, {"label": "2026-05", "value": 7740195.0}, {"label": "2026-06", "value": 18202181.0}], "top_vendor": [{"label": "華材料", "value": 4544332.0}, {"label": "達科技", "value": 4312845.0}, {"label": "凱工業", "value": 3981810.0}, {"label": "耀電子", "value": 3944272.0}, {"label": "耀金屬", "value": 3894693.0}, {"label": "大貿易", "value": 3826700.0}, {"label": "晶科技", "value": 3532289.0}, {"label": "台零件", "value": 3531137.0}, {"label": "華工業", "value": 3431893.0}, {"label": "勤工業", "value": 3301317.0}], "paid_split": [{"label": "已付", "value": 64952213}, {"label": "未付", "value": 26551478}]}, "inventory": {"kpi": {"item_cnt": 367, "inv_val": 14870437, "instock": 366, "move_cnt": 3757, "move_in": 170425153, "move_out": 10907454836, "bom_cnt": 346}, "val_by_cat": [{"label": "原料", "value": 10956860.0}, {"label": "半成品", "value": 1772109.0}, {"label": "成品", "value": 767313.0}, {"label": "其他", "value": 717049.0}, {"label": "物料", "value": 657106.0}], "top_item": [{"label": "晶片電阻", "value": 1045153.0}, {"label": "積層電容", "value": 576988.0}, {"label": "CONTACT PIN", "value": 433636.0}, {"label": "SMD碳膜電阻,0805", "value": 267434.0}, {"label": "CABLE 白色組裝測試", "value": 200176.0}, {"label": "BODY", "value": 182229.0}, {"label": "電晶體", "value": 155539.0}, {"label": "SMA R/A CRIMP PLUG", "value": 150266.0}, {"label": "散熱片 G-015槽   (170m/m)", "value": 149244.0}, {"label": "9.5φ 圓銅條黃銅", "value": 143545.0}], "move_by_doc": [{"label": "511", "value": 1472.0}, {"label": "341", "value": 1029.0}, {"label": "231", "value": 917.0}, {"label": "581", "value": 339.0}]}, "manufacturing": {"kpi": {"wo_cnt": 348, "plan_qty": 265600, "made_qty": 255881, "scrap_qty": 3808, "yield": 98.5, "receipt_cnt": 339, "complete_rate": 96.3}, "wo_month": [{"label": "2024-07", "value": 10}, {"label": "2024-08", "value": 10}, {"label": "2024-09", "value": 14}, {"label": "2024-10", "value": 13}, {"label": "2024-11", "value": 14}, {"label": "2024-12", "value": 17}, {"label": "2025-01", "value": 13}, {"label": "2025-02", "value": 9}, {"label": "2025-03", "value": 13}, {"label": "2025-04", "value": 15}, {"label": "2025-05", "value": 14}, {"label": "2025-06", "value": 16}, {"label": "2025-07", "value": 14}, {"label": "2025-08", "value": 16}, {"label": "2025-09", "value": 14}, {"label": "2025-10", "value": 15}, {"label": "2025-11", "value": 20}, {"label": "2025-12", "value": 17}, {"label": "2026-01", "value": 12}, {"label": "2026-02", "value": 14}, {"label": "2026-03", "value": 15}, {"label": "2026-04", "value": 17}, {"label": "2026-05", "value": 17}, {"label": "2026-06", "value": 19}], "status": [{"label": "已確認/生產中", "value": 339}, {"label": "未確認", "value": 9}], "top_prod": [{"label": "CONTACT PIN", "value": 30922.0}, {"label": "BODY", "value": 14815.0}, {"label": "微波感應器", "value": 11514.0}, {"label": "智能流程-自製件", "value": 11418.0}, {"label": "JK25-24S05V REV.NI", "value": 10799.0}, {"label": "SMA R/A CRIMP PLUG", "value": 10650.0}, {"label": "MCX CRIMP m", "value": 10476.0}, {"label": "BNC \"Y\" LINK JACK-PLUG-JACK", "value": 9251.0}, {"label": "CABLE ASSEMBLY", "value": 9170.0}, {"label": "G-BRF2-825-975/R", "value": 8426.0}], "plan_vs_made": [{"label": "預計產量", "value": 265600}, {"label": "已生產量", "value": 255881}, {"label": "報廢量", "value": 3808}]}, "meta": {"company": "碩盛國際不動產 THRONE PROPERTY", "source": "ERP DEMO 範例資料庫", "exported": "2026-06-17", "period": "2024-01 ~ 2026-12"}};
-const GOLD=["#A67C52","#c9a47e","#8a6440","#d9c2a6","#6f4f33","#e3d2bb","#b98a5e","#a08566"];
-const fmtN = n => Math.round(n).toLocaleString("en-US");
-const fmtM = n => { const a=Math.abs(n);
-  if(a>=1e8) return (n/1e8).toFixed(2)+" 億";
-  if(a>=1e4) return (n/1e4).toFixed(0)+" 萬";
-  return fmtN(n); };
-const $ = (s,el=document)=>el.querySelector(s);
-
-function kpiCard(lab,val,sub,cls){
-  return `<div class="kpi"><div class="lab">${lab}</div>
-    <div class="val ${cls||''}">${val}</div>${sub?`<div class="sub">${sub}</div>`:''}</div>`;
-}
-function kpiRow(arr){return `<div class="kpis">${arr.join("")}</div>`;}
-
-function barCard(title,sub,items,money){
-  const max=Math.max(...items.map(d=>d.value),1);
-  const rows=items.map(d=>{
-    const w=(d.value/max*100).toFixed(1);
-    const vl=money?fmtM(d.value):fmtN(d.value);
-    return `<div class="bar"><div class="nm" title="${d.label}">${d.label}</div>
-      <div class="track"><div class="fill" style="width:${w}%"></div></div>
-      <div class="vl">${vl}</div></div>`;
-  }).join("");
-  return `<div class="card"><h3>${title} ${sub?`<span>${sub}</span>`:''}</h3>${rows}</div>`;
-}
-
-function lineCard(title,sub,items,money){
-  const W=560,H=210,pl=52,pr=14,pt=16,pb=34;
-  const xs=W-pl-pr, ys=H-pt-pb;
-  const vals=items.map(d=>d.value), max=Math.max(...vals,1), min=0;
-  const n=items.length;
-  const X=i=> pl + (n<=1?xs/2:(i/(n-1))*xs);
-  const Y=v=> pt + ys - ((v-min)/(max-min||1))*ys;
-  let path="", area="", dots="";
-  items.forEach((d,i)=>{ const x=X(i),y=Y(d.value);
-    path += (i?"L":"M")+x.toFixed(1)+" "+y.toFixed(1)+" ";
-    dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" fill="#A67C52"><title>${d.label}: ${money?fmtM(d.value):fmtN(d.value)}</title></circle>`;
-  });
-  area = `M${X(0).toFixed(1)} ${(pt+ys).toFixed(1)} `+path.replace(/^M/,"L")+`L${X(n-1).toFixed(1)} ${(pt+ys).toFixed(1)} Z`;
-  // y gridlines
-  let grid="",labs="";
-  for(let g=0;g<=4;g++){ const v=max*g/4, y=Y(v);
-    grid+=`<line x1="${pl}" y1="${y.toFixed(1)}" x2="${W-pr}" y2="${y.toFixed(1)}" stroke="#efe7da"/>`;
-    labs+=`<text x="${pl-8}" y="${(y+3).toFixed(1)}" text-anchor="end" font-size="9" fill="#a89c8c">${money?fmtM(v):fmtN(v)}</text>`;
-  }
-  // x labels (sparse)
-  let xlab=""; const step=Math.ceil(n/8);
-  items.forEach((d,i)=>{ if(i%step===0||i===n-1){
-    xlab+=`<text x="${X(i).toFixed(1)}" y="${H-12}" text-anchor="middle" font-size="9" fill="#a89c8c">${d.label.slice(2)}</text>`;}});
-  return `<div class="card"><h3>${title} ${sub?`<span>${sub}</span>`:''}</h3>
-    <svg viewBox="0 0 ${W} ${H}">
-      ${grid}${labs}
-      <path d="${area}" fill="url(#agrad)" opacity="0.25"/>
-      <defs><linearGradient id="agrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#A67C52"/><stop offset="1" stop-color="#A67C52" stop-opacity="0"/></linearGradient></defs>
-      <path d="${path}" fill="none" stroke="#A67C52" stroke-width="2"/>
-      ${dots}${xlab}
-    </svg></div>`;
-}
-
-function donutCard(title,sub,items,money){
-  const total=items.reduce((s,d)=>s+d.value,0)||1;
-  const cx=90,cy=90,r=66,sw=26; const C=2*Math.PI*r;
-  let off=0, arcs="";
-  items.forEach((d,i)=>{ const frac=d.value/total; const len=frac*C;
-    arcs+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${GOLD[i%GOLD.length]}"
-      stroke-width="${sw}" stroke-dasharray="${len.toFixed(2)} ${(C-len).toFixed(2)}"
-      stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"><title>${d.label}: ${(frac*100).toFixed(1)}%</title></circle>`;
-    off+=len;
-  });
-  const leg=items.map((d,i)=>`<span><i style="background:${GOLD[i%GOLD.length]}"></i>${d.label} ${(d.value/total*100).toFixed(1)}%</span>`).join("");
-  return `<div class="card"><h3>${title} ${sub?`<span>${sub}</span>`:''}</h3>
-    <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-      <svg viewBox="0 0 180 180" style="width:180px;flex:0 0 180px">${arcs}
-        <text x="90" y="86" text-anchor="middle" font-size="12" fill="#8c8175">合計</text>
-        <text x="90" y="106" text-anchor="middle" font-size="15" font-weight="600" fill="#2c2620">${money?fmtM(total):fmtN(total)}</text>
-      </svg>
-      <div class="legend" style="flex:1">${leg}</div>
-    </div></div>`;
-}
-
-/* ---------- render ---------- */
-const M=DATA;
-$("#meta").textContent = `資料來源：${M.meta.source}　·　匯出日：${M.meta.exported}　·　期間：${M.meta.period}`;
-
-const TABS=[["overview","總覽"],["sales","銷售"],["finance","財會"],["inventory","庫存"],["manufacturing","製造"]];
-$("#nav").innerHTML = TABS.map(([id,nm],i)=>`<div class="tab ${i===0?'active':''}" data-t="${id}">${nm}</div>`).join("");
-
-// OVERVIEW
-const s=M.sales.kpi, f=M.finance.kpi, inv=M.inventory.kpi, mf=M.manufacturing.kpi;
-$("#overview").innerHTML =
-  `<div class="sec-h">營運總覽 OVERVIEW</div>`+
-  kpiRow([
-    kpiCard("銷售訂單總額", fmtM(s.order_amt)+" <small>元</small>", `${s.order_cnt} 張訂單`),
-    kpiCard("銷貨收入", fmtM(f.revenue)+" <small>元</small>", `${s.inv_cnt} 張銷貨單`),
-    kpiCard("應付帳款", fmtM(f.ap_amt)+" <small>元</small>", `未付 ${fmtM(f.ap_open)}`),
-    kpiCard("收支毛差", fmtM(f.gross)+" <small>元</small>", "銷貨收入 − 應付", f.gross>=0?"pos":"neg"),
-    kpiCard("庫存總值", fmtM(inv.inv_val)+" <small>元</small>", `${inv.item_cnt} 個品號`),
-    kpiCard("製令生產良率", mf.yield+" <small>%</small>", `達成率 ${mf.complete_rate}%`,"pos"),
-  ])+
-  `<div class="sec-h">收入 vs 支出 月趨勢</div>`+
-  `<div class="grid g2">
-     ${lineCard("銷貨收入","按月 · NTD",M.sales.inv_month,true)}
-     ${lineCard("應付帳款","按月 · NTD",M.finance.ap_month,true)}
-   </div>`+
-  `<div class="grid g2">
-     ${barCard("銷售前十大客戶","訂單金額 · NTD",M.sales.top_cust,true)}
-     ${donutCard("庫存金額結構","依品號類別",M.inventory.val_by_cat,true)}
-   </div>`;
-
-// SALES
-$("#sales").innerHTML =
-  `<div class="sec-h">銷售模組 SALES</div>`+
-  kpiRow([
-    kpiCard("訂單總額", fmtM(s.order_amt)+" <small>元</small>", `含稅額 ${fmtM(s.order_tax)}`),
-    kpiCard("訂單張數", fmtN(s.order_cnt)+" <small>張</small>", `平均 ${fmtM(s.avg_order)}/張`),
-    kpiCard("銷貨收入", fmtM(s.inv_amt)+" <small>元</small>", `${s.inv_cnt} 張銷貨單`),
-    kpiCard("交易客戶數", fmtN(s.cust_cnt)+" <small>家</small>"),
-  ])+
-  `<div class="grid g2">
-     ${lineCard("訂單金額月趨勢","按月 · NTD",M.sales.order_month,true)}
-     ${lineCard("銷貨收入月趨勢","按月 · NTD",M.sales.inv_month,true)}
-   </div>`+
-  `<div class="grid g2">
-     ${barCard("前十大客戶","訂單金額 · NTD",M.sales.top_cust,true)}
-     ${barCard("熱銷品項 TOP10","訂單金額 · NTD",M.sales.top_prod,true)}
-   </div>`+
-  `<div class="grid g3">
-     ${donutCard("通路別占比","訂單金額",M.sales.by_channel,true)}
-     ${donutCard("地區別占比","訂單金額",M.sales.by_region,true)}
-     ${barCard("業務員業績","訂單金額 · NTD",M.sales.by_sales,true)}
-   </div>`;
-
-// FINANCE
-$("#finance").innerHTML =
-  `<div class="sec-h">財會模組 FINANCE</div>`+
-  kpiRow([
-    kpiCard("銷貨收入", fmtM(f.revenue)+" <small>元</small>"),
-    kpiCard("應付帳款", fmtM(f.ap_amt)+" <small>元</small>", `${f.ap_cnt} 張憑單`),
-    kpiCard("已付金額", fmtM(f.ap_paid)+" <small>元</small>","pos"),
-    kpiCard("未付餘額", fmtM(f.ap_open)+" <small>元</small>","neg"),
-    kpiCard("收支毛差", fmtM(f.gross)+" <small>元</small>","", f.gross>=0?"pos":"neg"),
-    kpiCard("會計科目數", fmtN(f.acct_cnt)+" <small>個</small>"),
-  ])+
-  `<div class="grid g2">
-     ${lineCard("應付帳款月趨勢","按月 · NTD",M.finance.ap_month,true)}
-     ${lineCard("銷貨收入月趨勢","按月 · NTD",M.finance.inv_month,true)}
-   </div>`+
-  `<div class="grid g2">
-     ${barCard("前十大供應商","應付金額 · NTD",M.finance.top_vendor,true)}
-     ${donutCard("應付帳款付款狀況","已付 vs 未付",M.finance.paid_split,true)}
-   </div>`;
-
-// INVENTORY
-$("#inventory").innerHTML =
-  `<div class="sec-h">庫存模組 INVENTORY</div>`+
-  kpiRow([
-    kpiCard("品號總數", fmtN(inv.item_cnt)+" <small>個</small>", `有庫存 ${inv.instock} 個`),
-    kpiCard("庫存總值", fmtM(inv.inv_val)+" <small>元</small>"),
-    kpiCard("庫存異動筆數", fmtN(inv.move_cnt)+" <small>筆</small>"),
-    kpiCard("BOM 用量明細", fmtN(inv.bom_cnt)+" <small>筆</small>"),
-  ])+
-  `<div class="grid g2">
-     ${donutCard("庫存金額結構","依品號類別",M.inventory.val_by_cat,true)}
-     ${barCard("庫存金額 TOP10 品項","庫存金額 · NTD",M.inventory.top_item,true)}
-   </div>`+
-  `<div class="grid g2">
-     ${barCard("各類別庫存金額","NTD",M.inventory.val_by_cat,true)}
-     ${barCard("庫存異動單別分布","異動筆數",M.inventory.move_by_doc,false)}
-   </div>`;
-
-// MANUFACTURING
-$("#manufacturing").innerHTML =
-  `<div class="sec-h">製造模組 MANUFACTURING</div>`+
-  kpiRow([
-    kpiCard("製令張數", fmtN(mf.wo_cnt)+" <small>張</small>", `生產入庫 ${mf.receipt_cnt} 張`),
-    kpiCard("預計產量", fmtN(mf.plan_qty)+" <small>PCS</small>"),
-    kpiCard("已生產量", fmtN(mf.made_qty)+" <small>PCS</small>", `達成率 ${mf.complete_rate}%`,"pos"),
-    kpiCard("報廢數量", fmtN(mf.scrap_qty)+" <small>PCS</small>","neg"),
-    kpiCard("生產良率", mf.yield+" <small>%</small>","","pos"),
-  ])+
-  `<div class="grid g2">
-     ${lineCard("製令開立月趨勢","按月 · 張數",M.manufacturing.wo_month,false)}
-     ${donutCard("製令狀態分布","張數",M.manufacturing.status,false)}
-   </div>`+
-  `<div class="grid g2">
-     ${barCard("主力生產品項 TOP10","已生產量 · PCS",M.manufacturing.top_prod,false)}
-     ${barCard("產量結構","PCS",M.manufacturing.plan_vs_made,false)}
-   </div>`;
-
-// tab switching
-$("#nav").addEventListener("click",e=>{
-  const t=e.target.closest(".tab"); if(!t) return;
-  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
-  document.querySelectorAll("section").forEach(x=>x.classList.remove("active"));
-  t.classList.add("active");
-  $("#"+t.dataset.t).classList.add("active");
-  window.scrollTo({top:0,behavior:"smooth"});
-});
+// nav scroll state
+const hdr=document.getElementById('hdr');
+addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>40));
+// mobile menu
+const burger=document.getElementById('burger'),menu=document.getElementById('menu');
+burger.addEventListener('click',()=>{const o=menu.classList.toggle('open');burger.setAttribute('aria-expanded',o)});
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');burger.setAttribute('aria-expanded',false)}));
+// reveal on scroll
+const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// count-up stats
+const cio=new IntersectionObserver((es)=>es.forEach(e=>{
+  if(!e.isIntersecting)return; const el=e.target,to=+el.dataset.to,small=el.querySelector('small'),suf=small?small.outerHTML:'';
+  let n=0,step=Math.max(1,Math.round(to/60));
+  const t=setInterval(()=>{n+=step;if(n>=to){n=to;clearInterval(t)}el.innerHTML=n.toLocaleString('en-US')+suf;},22);
+  cio.unobserve(el);
+}),{threshold:.6});
+document.querySelectorAll('.num').forEach(el=>cio.observe(el));
+// form
+function handleSubmit(e){e.preventDefault();const f=e.target;
+  f.innerHTML='<div style="text-align:center;padding:30px 0"><div style="font-family:var(--serif-tc);font-size:24px;color:var(--gold-l);margin-bottom:12px">✦ 預約已送出</div><p style="color:#aeb6c6">感謝您的信任，專屬顧問將於一個工作日內與您聯繫。</p></div>';
+  return false;}
 </script>
 </body>
 </html>
